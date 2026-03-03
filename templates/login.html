@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - SCC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="form-body">
+    <div class="form-container">
+        <div class="form-white-side login-curve">
+            <h1 class="welcome-text">Welcome Cecilian</h1>
+            <p class="sub-instruction">Please Login to access our website</p>
+
+            <form action="/login" method="POST">
+                <div class="input-line">
+                    <input type="text" name="email_or_id" placeholder="Student ID or School Email" required>
+                </div>
+                <div class="input-line"><input type="password" name="password" placeholder="Enter Password" required></div>
+                <div class="login-buttons">
+                    <button type="button" class="btn-back" onclick="window.location.href='/'">Back</button>
+                    <button type="submit" class="btn-login-submit">Login</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-red-side">
+            <div class="side-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" height="50">
+                <div class="side-logo-text">
+                    <h2>ST. CECILIA'S SCHOOL</h2>
+                    <p>COMPLAINT ASSISTANCE</p>
+                </div>
+            </div>
+            <img src="{{ url_for('static', filename='images/teacher.png') }}" class="teacher-img-right">
+        </div>
+    </div>
+</body>
+</html>

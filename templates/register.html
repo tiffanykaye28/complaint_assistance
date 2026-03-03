@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - SCC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="form-body">
+    <div class="form-container">
+        <div class="form-red-side">
+            <div class="side-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" height="50">
+                <div class="side-logo-text">
+                    <h2>ST. CECILIA'S SCHOOL</h2>
+                    <p>COMPLAINT ASSISTANCE</p>
+                </div>
+            </div>
+            <img src="{{ url_for('static', filename='images/teacher.png') }}" class="teacher-img-left">
+        </div>
+
+        <div class="form-white-side">
+            <h1 class="create-text">Create Account</h1>
+            <p class="sub-instruction">Let's get started !</p>
+            
+            <form action="/register" method="POST"> <div class="input-line">
+        <input type="text" name="full_name" placeholder="Full Name" required>
+    </div>
+    <div class="input-line">
+        <input type="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="input-line">
+        <input type="text" name="student_id" placeholder="School ID" required>
+    </div>
+    <div class="input-line">
+        <input type="password" name="password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn-confirm">Confirm Account</button>
+</form>
+        </div>
+    </div>
+</body>
+</html>

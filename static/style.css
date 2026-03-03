@@ -1,0 +1,585 @@
+/* --- 1. GLOBAL RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- 2. LANDING PAGE ANIMATION --- */
+.main-wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    animation: backgroundSlideshow 10s infinite ease-in-out;
+    background-size: cover;
+    background-position: center;
+}
+
+@keyframes backgroundSlideshow {
+    0%, 45% { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/static/images/img1.png'); }
+    55%, 100% { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/static/images/img2.png'); }
+}
+
+/* --- 3. HEADER & WHITE LINKS (Plain Text) --- */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: rgba(102, 37, 37, 0.8);
+    z-index: 100;
+}
+
+.logo-section { display: flex; align-items: center; gap: 15px; color: white; }
+.logo-section img { height: 50px; }
+.logo-text h1 { font-family: 'Protest Strike', sans-serif; font-size: 22px; margin: 0; }
+.logo-text p { font-size: 10px; margin: 0; letter-spacing: 1px; }
+
+.top-nav nav {
+    display: flex;
+    gap: 30px; 
+}
+
+.top-nav nav a {
+    color: #FFFFFF !important; 
+    text-decoration: none;      
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    transition: 0.3s;
+}
+
+.top-nav nav a:hover {
+    color: #fca5a5 !important; 
+}
+
+/* --- 4. HERO CONTENT & SUB-TEXT --- */
+.hero-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.main-title {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 100px;
+    color: white;
+    -webkit-text-stroke: 2px #DA2B2B;
+    text-align: center;
+    line-height: 0.9;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.main-title span { display: block; }
+
+.sub-text {
+    position: absolute;
+    bottom: 40px; 
+    left: 40px;
+    font-family: 'Post No Bills Jaffna', sans-serif;
+    font-size: 36px;
+    color: #DA2B2B;
+    -webkit-text-stroke: 1.2px white;
+    white-space: nowrap;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+/* --- 5. FOOTER --- */
+.button-footer {
+    background-color: #fca5a5;
+    padding: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    z-index: 50;
+}
+
+.btn-red {
+    background-color: #DA2B2B;
+    color: white;
+    font-family: 'Protest Strike', sans-serif;
+    padding: 12px 45px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* --- COLORS & FONTS --- */
+:root {
+    --vibrant-red: #FF3131; /* Ang neon red nga imong ganahan */
+    --soft-white: #FFFFFF;
+}
+
+/* ============================================================
+   7. AUTH PAGES (LOGIN & REGISTER) 
+   ============================================================ */
+
+/* SETUP PARA SA BODY */
+.form-body {
+    background-color: #2b2b2b !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    overflow: hidden;
+}
+
+/* MAIN CONTAINER */
+.form-container {
+    display: flex !important;
+    width: 950px;
+    height: 550px;
+    background-color: #DA2B2B; /* Pula nga side background */
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0px 20px 50px rgba(0,0,0,0.5);
+}
+
+/* Reverse layout para sa Register */
+.register-reverse {
+    flex-direction: row-reverse !important;
+}
+
+/* WHITE PANEL SETUP */
+.form-white-side {
+    flex: 1.3;
+    background-color: white !important;
+    padding: 50px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* CURVES */
+.login-curve {
+    border-top-right-radius: 120px;
+    border-bottom-right-radius: 120px;
+}
+
+.register-curve {
+    border-top-left-radius: 120px;
+    border-bottom-left-radius: 120px;
+}
+
+/* TITLES (Welcome Cecilian & Create Account) */
+.welcome-text, .create-text {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 55px;
+    color: white;
+    -webkit-text-stroke: 2px #DA2B2B;
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.login-sub-text, .sub-instruction {
+    color: #DA2B2B;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 40px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+/* INPUT LINES */
+.input-line {
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.input-line input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 10px 0;
+    font-size: 16px;
+    background: transparent;
+}
+
+/* RED SIDE (Images and Logo) */
+.form-red-side {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    color: white;
+}
+
+.side-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.side-logo img { height: 50px; }
+.side-logo-text h2 { font-size: 14px; margin: 0; font-family: 'Protest Strike', sans-serif; }
+.side-logo-text p { font-size: 9px; margin: 0; }
+
+.teacher-img-right { position: absolute; bottom: 0; right: 0; height: 90%; }
+.teacher-img-left { position: absolute; bottom: 0; left: 0; height: 90%; }
+
+
+
+/* --- LOGIN & BACK BUTTONS (UNIFORM DESIGN) --- */
+.login-buttons {
+    display: flex;
+    gap: 25px; /* Distansya sa duha ka button */
+    margin-top: 40px;
+}
+
+.btn-back, .btn-login-submit {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 22px;
+    color: white;
+    background-color: #FF3131; /* Parehas na silang Pula */
+    
+    /* Gidak-on: Rectangular ug Lapad */
+    width: 170px; 
+    height: 55px;
+    
+    border: none;
+    border-radius: 10px; /* Rectangular corners */
+    cursor: pointer;
+    
+    /* 3D Shadow para sa duha */
+    box-shadow: 0px 5px 0px #b32222;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+/* Hover effect para mo-pislit */
+.btn-back:active, .btn-login-submit:active {
+    transform: translateY(4px);
+    box-shadow: 0px 1px 0px #b32222;
+}
+
+/* --- WELCOME TEXT (ONE WORD) --- */
+.welcome-text-single {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 80px;
+    color: white;
+    -webkit-text-stroke: 3px #FF3131;
+    margin-bottom: 0;
+    line-height: 1;
+} 
+
+
+/* --- REGISTER & CONFIRM BUTTONS (UNIFORM FIGMA DESIGN) --- */
+.register-buttons {
+    display: flex;
+    justify-content: center; /* I-center ang button sa puti nga side */
+    margin-top: 30px;
+}
+
+.btn-confirm {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 22px;
+    color: white;
+    background-color: #FF3131; /* Vibrant Red */
+    
+    /* Gidak-on: Lapad gyud dapat base sa Figma */
+    width: 280px; 
+    height: 55px;
+    
+    border: none;
+    border-radius: 10px; /* Rectangular base */
+    cursor: pointer;
+    
+    /* 3D Shadow effect */
+    box-shadow: 0px 5px 0px #b32222;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.btn-confirm:active {
+    transform: translateY(4px);
+    box-shadow: 0px 1px 0px #b32222;
+}
+
+/* --- REGISTER TEXT STROKE (CREATE ACCOUNT) --- */
+.create-text {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 60px;
+    color: white;
+    -webkit-text-stroke: 2.5px #FF3131; /* Pula nga outline */
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+
+/* SUCCESS PAGE */
+/* --- SUCCESS PAGE STYLES --- */
+.success-body {
+    /* Light red radial gradient background */
+    background: radial-gradient(circle, #ffb3b3 0%, #ff8080 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    text-align: center;
+}
+
+.congrats-text {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 75px;
+    color: white;
+    -webkit-text-stroke: 3px #FF3131; /* Pula nga stroke */
+    margin-bottom: 20px;
+}
+
+/* Ang Red Check Badge */
+.check-badge {
+    width: 150px;
+    height: 150px;
+    background-color: #FF3131;
+    border-radius: 50%; /* Lingin nga badge */
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    /* Serrated edge effect (optional) */
+    position: relative;
+}
+
+.check-icon {
+    font-size: 80px;
+    color: white;
+    font-weight: bold;
+}
+
+.success-sub-text {
+    font-family: 'Protest Strike', sans-serif;
+    font-size: 45px;
+    color: white;
+    -webkit-text-stroke: 2px #FF3131;
+    margin-bottom: 40px;
+}
+
+/* Link back to login */
+.login-link-btn {
+    background-color: #FF5E5E;
+    color: white;
+    text-decoration: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 4px 0 #b32222;
+}
+
+
+/* --- ADMIN DASHBOARD LAYOUT --- */
+:root {
+    --primary-red: #FF3131;
+    --bg-light: #F8F9FA;
+    --text-dark: #333;
+    --sidebar-width: 260px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.dashboard-wrapper {
+    display: flex;
+    background-color: var(--bg-light);
+    min-height: 100vh;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--primary-red);
+    color: white;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+}
+
+.sidebar-header .logo { width: 50px; margin-bottom: 15px; }
+.brand h3 { font-size: 16px; font-weight: 700; }
+.brand p { font-size: 10px; opacity: 0.8; }
+
+.nav-menu ul { list-style: none; margin-top: 40px; }
+.nav-menu li {
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+}
+.nav-menu li.active, .nav-menu li:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Content Area */
+.main-panel {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 40px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.search-container {
+    background: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+.search-container input { border: none; outline: none; margin-left: 10px; }
+
+/* Cards */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+.stat-card .label { font-size: 12px; color: #888; text-transform: uppercase; }
+
+/* Table Style */
+.table-container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th { text-align: left; padding: 15px; color: #888; font-weight: 600; font-size: 13px; }
+td { padding: 15px; border-top: 1px solid #F1F1F1; font-size: 14px; }
+
+/* Status Pills */
+.status-pill {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+}
+.status-pill.pending { background: #FFEDED; color: #FF3131; }
+.status-pill.resolved { background: #E7F9EE; color: #2ECC71; }
+
+
+/* student home dashboard */
+/* GLOBAL STYLES */
+body { font-family: 'Inter', sans-serif; background: #F4F7FE; }
+
+/* SIDEBAR */
+.sidebar { background: #FF3131; width: 260px; height: 100vh; position: fixed; color: white; padding: 20px; }
+.nav-menu li.active { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+/* CARDS WITH SHADOWS */
+.s-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px; /* Soft corners gikan sa Figma */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Soft shadow */
+}
+
+/* BUTTONS */
+.btn-submit-new {
+    background: #4A58EC; /* Saktong blue sa Figma */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+/* STATUS PILLS */
+.status-pill.pending { background: #FFEDED; color: #FF3131; }
+.status-pill.resolved { background: #E7F9EE; color: #2ECC71; }
+
+
+
+/*SUBMIT COMPLAINT*/
+
+.form-section {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.form-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    color: #b30000; /* SCC Red */
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.input-group select, .input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    text-decoration: none;
+    color: #666;
+    padding: 12px 25px;
+    border-radius: 8px;
+}

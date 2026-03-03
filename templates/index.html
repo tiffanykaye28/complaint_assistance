@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SCC - Complaint Assistance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&family=Post+No+Bills+Jaffna:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <header class="top-nav">
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                <div class="logo-text">
+                    <h1>ST. CECILIA'S SCHOOL</h1>
+                    <p>COMPLAINT ASSISTANCE</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+<a href="{{ url_for('login') }}" class="btn-login">Login</a>               
+<a href="{{ url_for('register') }}" class="btn-register">Register</a>            </nav>
+        </header>
+
+        <section class="hero-content">
+            <h1 class="main-title">Submit Your Concerns <span>Easily</span></h1>
+            <p class="sub-text">A simple platform for students to report issues and track updates.</p>
+        </section>
+
+        <footer class="button-footer">
+            <button class="btn-red" onclick="window.location.href='/register'">Submit a complaint</button>
+            <button class="btn-red">Track Status</button>
+        </footer>
+    </div>
+</body>
+</html> 

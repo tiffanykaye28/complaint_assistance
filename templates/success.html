@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Congratulations - SCC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="success-body">
+    <div class="success-container">
+        <h1 class="congrats-text">Congratulations!</h1>
+        
+        <div class="check-container">
+            <img src="{{ url_for('static', filename='images/Approval.png') }}" class="success-check-img">
+        </div>
+
+        <h2 class="success-sub-text">You can now complain</h2>
+        
+        <div class="success-btn-container">
+            <a href="/login" class="btn-back-success">Click here to log in</a>
+        </div>
+    </div>
+
+    <script>
+        // Confetti Side Cannons Effect
+        var duration = 4 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        function randomInRange(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        var interval = setInterval(function() {
+          var timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          var particleCount = 50 * (timeLeft / duration);
+          
+          // Cannon gikan sa WALA
+          confetti(Object.assign({}, defaults, { 
+            particleCount, 
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+            colors: ['#FF3131', '#ffffff'] 
+          }));
+          
+          // Cannon gikan sa TUO
+          confetti(Object.assign({}, defaults, { 
+            particleCount, 
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+            colors: ['#FF3131', '#ffffff'] 
+          }));
+        }, 250);
+    </script>
+</body>
+</html>

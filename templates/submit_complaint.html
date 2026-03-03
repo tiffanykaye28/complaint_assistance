@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint - SCC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+                <div class="brand">
+                    <h3>ST. CECILIA'S SCHOOL</h3>
+                    <p>COMPLAINT ASSISTANCE</p>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('student_home') }}">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('submit_complaint') }}">
+                                <i class="fas fa-envelope"></i> Complaints
+                            </a>
+                        </li>
+                        <li><i class="fas fa-bell"></i> Notifications</li>
+                        <li><i class="fas fa-user"></i> Account</li>
+                        <li class="logout">
+                            <a href="{{ url_for('logout') }}">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+        </aside>
+
+        <main class="main-panel">
+            <header class="top-header">
+                <h2>New Complaint</h2>
+                <div class="user-profile">
+                    <span>{{ user.student_id }}</span>
+                    <div class="avatar"></div>
+                </div>
+            </header>
+
+            <section class="form-section">
+                <div class="form-card">
+                    <div class="form-header">
+                        <i class="fas fa-edit"></i>
+                        <h3>File a Report</h3>
+                    </div>
+                    
+                    <form action="{{ url_for('submit_complaint') }}" method="POST">
+                        <div class="input-group">
+                            <label>Category</label>
+                            <select name="category" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="Bullying">Bullying</option>
+                                <option value="Teacher Issue">Teacher Issue</option>
+                                <option value="Facility">Facility</option>
+                                <option value="Academic">Academic</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Description</label>
+                            <textarea name="description" rows="5" placeholder="Details of your complaint..." required></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <a href="{{ url_for('student_home') }}" class="btn-cancel">Cancel</a>
+                            <button type="submit" class="btn-submit-new">Submit Complaint</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
