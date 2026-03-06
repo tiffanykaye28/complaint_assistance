@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint - SCC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+                <div class="brand">
+                    <h3>ST. CECILIA'S SCHOOL</h3>
+                    <p>COMPLAINT ASSISTANCE</p>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> <span>Home</span></a></li>
+
+                    <li class="nav-item-dropdown">
+                        <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown()">
+                            <i class="fas fa-envelope"></i>
+                            <span>Complaints</span>
+                        </a>
+                        <ul class="dropdown-container show-dropdown" id="complaintsDropdown">
+                            <li class="sub-active">
+<a href="{{ url_for('submit_complaint') }}">
+    <i class="fas fa-plus-square sub-icon"></i> <span>New Complaint</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('student_home') }}">
+                                    <i class="fas fa-folder-open sub-icon"></i> <span>My Complaints</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#"><i class="fas fa-bell"></i> <span>Notifications</span></a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> <span>Account</span></a></li>
+                    <li class="logout"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-panel">
+            <header class="top-header">
+                <div class="Submit a Complaint"><h2>Submit a Complaint</h2></div>
+                <div class="header-right">
+                    <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search"></div>
+                    <div class="user-meta">
+                        <img src="{{ url_for('static', filename='images/notifbell.png') }}" class="custom-bell">
+                        <div class="avatar"></div>
+                        <span>{{ user.student_id }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content-wrapper">
+    <div class="page-intro">
+        <h1>Submit a complaint</h1>
+        <p>Use the form below to submit your complaint. Our team will review and address it promptly.</p>
+    </div>
+
+    <div class="complaint-card-main">
+        <div class="card-header">
+            <h3>Complaint Details</h3>
+        </div>
+
+        <form action="{{ url_for('submit_complaint') }}" method="POST" class="complaint-form">
+            <div class="input-group">
+                <label>Category</label>
+                <div class="select-wrapper">
+                    <select name="category" class="form-input">
+                        <option>Teacher Issue</option>
+                        <option>Academic</option>
+                        <option>Bullying</option>
+                        <option>Facility Issue</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Description</label>
+                <textarea name="description" class="form-input pink-textarea" placeholder="Enter details..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Upload photo (Optional)</label>
+                <div class="upload-area-dashed">
+                    <p>Drag and drop image or click to upload</p>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit-maroon">Submit complaint</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="status-stepper-box">
+        <div class="stepper-content">
+            <div class="step completed">
+                <div class="step-circle-icon"><i class="fas fa-check"></i></div>
+                <span class="step-label green-text">Submit complaint</span>
+            </div>
+            <div class="step-line-dashed">----------</div>
+            <div class="step">
+                <div class="step-circle-num">2</div>
+                <span class="step-label">Under review</span>
+            </div>
+            <div class="step-line-dashed">----------</div>
+            <div class="step">
+                <div class="step-circle-num">3</div>
+                <span class="step-label">Resolve</span>
+            </div>
+        </div>
+    </div>
+    <p class="track-footer">Track the progress of your complaint below.</p>
+</div>

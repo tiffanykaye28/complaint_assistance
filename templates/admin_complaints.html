@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints List - Admin SCC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-page">
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+                <div class="brand">
+                    <h3>ST. CECILIA'S SCHOOL</h3>
+                    <p>COMPLAINT ASSISTANCE</p>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="{{ url_for('admin_dashboard_route') }}"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
+                    <li class="active"><a href="{{ url_for('admin_complaints') }}"><i class="fas fa-envelope"></i> <span>Complaints</span></a></li>
+                    <li><a href="#"><i class="fas fa-building"></i> <span>Departments</span></a></li>
+                    <li><a href="#"><i class="fas fa-tags"></i> <span>Categories</span></a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> <span>Reports</span></a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+                    <li class="logout"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-panel">
+            <header class="top-header">
+                <div class="header-left">
+                    <h2>Complaints</h2>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search">
+                    </div>
+                    <i class="fas fa-bell notification-bell"></i>
+                    <div class="user-profile-header">
+                        <div class="avatar-small"></div>
+                        <span>Admin <i class="fas fa-chevron-down"></i></span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content-wrapper">
+                <div class="filters-container">
+                    <select class="filter-select">
+                        <option>All Categories</option>
+                        <option>Teacher Issue</option>
+                        <option>Facility</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>All Statuses</option>
+                        <option>Pending</option>
+                        <option>In Progress</option>
+                        <option>Resolved</option>
+                    </select>
+                    <input type="text" placeholder="Start Date" class="filter-date">
+                    <input type="text" placeholder="End Date" class="filter-date">
+                    <button class="btn-filter-action">Filter</button>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header-title">
+                        <h3>Recent Complaints</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for complaint in complaints %}
+                            <tr>
+                                <td>#{{ complaint.id }}</td>
+                                <td><strong>{{ complaint.student_name }}</strong></td>
+                                <td>{{ complaint.category }}</td>
+                                <td>
+                                    <span class="status-pill {{ complaint.status.lower().replace(' ', '-') }}">
+                                        {{ complaint.status }}
+                                    </span>
+                                </td>
+                                <td>{{ complaint.date_posted }}</td>
+                                <td class="action-buttons">
+                                    <a href="{{ url_for('admin_complaints_review', id=complaint.id) }}" class="btn-table-view">View</a>
+                                    <button class="btn-table-resolve">Resolve</button>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 40px;">No complaints found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

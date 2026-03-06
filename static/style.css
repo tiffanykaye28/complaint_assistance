@@ -1,8 +1,12 @@
-/* --- 1. GLOBAL RESET --- */
-* {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
 }
 
 /* --- 2. LANDING PAGE ANIMATION --- */
@@ -395,11 +399,6 @@
     --shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
-.dashboard-wrapper {
-    display: flex;
-    background-color: var(--bg-light);
-    min-height: 100vh;
-}
 
 /* Sidebar Styling */
 .sidebar {
@@ -430,11 +429,26 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Content Area */
-.main-panel {
-    margin-left: var(--sidebar-width);
-    flex: 1;
-    padding: 40px;
+
+}
+.welcome-hero {
+    padding-left: 120px !important;
+    margin-top: 50px !important;
+}
+
+.welcome-hero h1 {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 42px !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    margin-bottom: 10px !important;
+}
+
+.welcome-hero p {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 20px !important;
+    color: #555 !important;
+    margin-bottom: 30px !important;
 }
 
 .top-bar {
@@ -468,62 +482,391 @@
 }
 .stat-card .label { font-size: 12px; color: #888; text-transform: uppercase; }
 
-/* Table Style */
-.table-container {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-}
-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-th { text-align: left; padding: 15px; color: #888; font-weight: 600; font-size: 13px; }
-td { padding: 15px; border-top: 1px solid #F1F1F1; font-size: 14px; }
 
-/* Status Pills */
-.status-pill {
-    padding: 6px 12px;
+
+/* 1. Highlight para sa Main Label (Complaints) */
+/* Gigamit nato ang .active > a para ang main link ra ang mo-pula/highlight */
+.nav-menu li.active > a {
+    background: rgba(255, 255, 255, 0.2); /* Translucent highlight */
+    border-radius: 12px;
+    margin-bottom: 5px;
+}
+
+/* 2. Highlight para sa Sub-item (New Complaint) */
+/* Kani ang mo-puti gyud ang background base sa imong gusto */
+.dropdown-container li.sub-active a {
+    background-color: white !important; /* Puti nga box */
+    color: #DA2B2B !important;          /* Pula ang text */
     border-radius: 8px;
-    font-size: 11px;
+    margin: 5px 15px;                   /* Para naay indentation */
     font-weight: 700;
 }
-.status-pill.pending { background: #FFEDED; color: #FF3131; }
-.status-pill.resolved { background: #E7F9EE; color: #2ECC71; }
+
+/* Siguroha nga ang icon sa sulod sa puti nga box mo-pula sab */
+.dropdown-container li.sub-active a i {
+    color: #DA2B2B !important;
+}
+
+/* Sub-icon spacing */
+.sub-icon {
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.submit-complaint-container,
+.stat-card,
+.table-container {
+background: white !important;
+    border-radius: 15px !important;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.15) !important;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px 20px 5px;
+}
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: fixed; /* Para dili mag-wild ang width sa columns */
+}
+thead tr {
+    background-color: #E5E7EB !important;
+}
+
+th {
+    padding: 15px !important; /* Space sa sulod sa gray bar */
+    text-align: left !important;
+    color: #4B5563 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+/* DATA ROWS */
+td {
+    padding: 15px !important;
+    border-bottom: 1px solid #F3F4F6 !important;
+    font-size: 14px !important;
+    word-wrap: break-word; /* Para dili molapas ang taas nga text */
+}
+
+/* STATUS PILLS (RECTANGULAR FIGMA STYLE) */
+.status-pill {
+    padding: 6px 12px !important;
+    border-radius: 6px !important; /* Medyo rectangular */
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    display: inline-block;
+}
+
+.status-pill.pending {
+    background-color: #FF4D4D !important; /* Pula sa Figma */
+    color: white !important;
+}
+
+.status-pill.resolved {
+    background-color: #00E676 !important; /* Berde sa Figma */
+    color: white !important;
+}
+
+/* BLUE VIEW BUTTON */
+.btn-view {
+    background-color: #185BFF !important;
+    color: white !important;
+    border: none !important;
+    padding: 6px 20px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    font-weight: 500;
+}
+.sidebar {
+    background: linear-gradient(90deg, #FF0000 44%, #B50000 100%);
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 30px 25px;
+}
+
+.logo {
+    width: 45px;
+}
+
+.brand h3 {
+    font-size: 13px;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.brand p {
+    font-size: 9px;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    width: 100%; /* Gamita ang full width sa sidebar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-menu li {
+    width: 100%;
+    margin-bottom: 5px;
+}
+.nav-menu li a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: 0.3s ease;
+}
+.nav-menu li i {
+    width: 25px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.nav-menu li span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-menu li.active a,
+.nav-menu li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.logout {
+    margin-top: auto;
+    margin-bottom: 30px;
+}
+.main-panel {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 0;
+    }
+.top-header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    margin: 0;
+    padding: 30px 45px;
+    box-sizing: border-box;
+    border-bottom: 5px solid #F3F4F6;
+    background: linear-gradient(to bottom, #f9fafb 0%, #e5e7eb 100%);
+    position: relative;
+    top: 0;
+}
+.Home h2 {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 32px;
+    font-weight: 300;
+    color: #000;
+    margin: 0;
+}
 
 
-/* student home dashboard */
-/* GLOBAL STYLES */
-body { font-family: 'Inter', sans-serif; background: #F4F7FE; }
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
 
-/* SIDEBAR */
-.sidebar { background: #FF3131; width: 260px; height: 100vh; position: fixed; color: white; padding: 20px; }
-.nav-menu li.active { background: rgba(255,255,255,0.2); border-radius: 10px; }
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #F3F4F6;
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: 1px solid #E5E7EB;
+    width: 250px;
+}
 
-/* CARDS WITH SHADOWS */
-.s-card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px; /* Soft corners gikan sa Figma */
+.search-bar input {
+    border: none;
+    background: transparent;
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.user-meta {
     display: flex;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Soft shadow */
 }
 
-/* BUTTONS */
+.avatar {
+    width: 35px;
+    height: 35px;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+
+
+.s-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.dashboard-content-wrapper {
+    padding: 30px 45px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    box-sizing: border-box;
+    }
+    .page-intro h1, .page-intro p {
+    margin-left: 0;
+    text-align: left;
+    width: 100%;
+}
+
+.submit-complaint-container {
+background: white !important;
+    padding: 20px 35px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 100px !important;
+    margin-bottom: 25px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
 .btn-submit-new {
-    background: #4A58EC; /* Saktong blue sa Figma */
-    color: white;
-    padding: 15px 25px;
-    border-radius: 10px;
+    background: #3F49E0 !important; /* Violet sa Figma */
+    color: white !important;
+    padding: 15px 30px !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
     text-decoration: none;
-    display: inline-block;
-    margin-top: 20px;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 3. ANG STATUS CARDS NGA MAG-ABAY */
+.stats-container {
+display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important; /* 4 columns para mo-abot sa tuo */
+    gap: 20px;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.stat-card {
+    background: white;
+    flex: 1;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06); /* Shadow para sa gagmay nga boxes */
+}
+
+/* 4. DESIGN PARA SA ICONS SA BOXES */
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+.stat-icon.pending { background: #FFB000; color: white; }
+.stat-icon.review { background: #185BFF; color: white; }
+.stat-icon.resolved { background: #00B633; color: white; }
+.stat-icon.total { background: #8C52FF; color: white; }
+
+/* PARA SA ICON SA BUTTTON */
+.btn-submit-new i {
+    font-size: 20px;
+    margin-right: 5px; /* Match sa padding sa button */
 }
 
 /* STATUS PILLS */
 .status-pill.pending { background: #FFEDED; color: #FF3131; }
 .status-pill.resolved { background: #E7F9EE; color: #2ECC71; }
+/* TABLE HEADER FLEXBOX */
+.table-header {
+    display: flex;
+    justify-content: space-between; /* I-distansya ang title ug search */
+    align-items: center;
+    margin-bottom: 20px;
+}
+.table-search-box {
+    display: flex;
+    gap: 10px;
+}
+
+.table-input {
+    padding: 8px 15px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 220px;
+    outline: none;
+}
+
+.btn-table-search {
+    background-color: #185BFF !important; /* Brighter blue parehas sa Figma */
+    color: white !important;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif !important;/* TABLE HEADER BACKGROUND (GRAY BAR) */
+
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+thead tr {
+    background-color: #E5E7EB !important; /* Grayish header bar */
+}
+
+th {
+    color: #4B5563 !important;
+    font-weight: 600 !important;
+    padding: 12px 15px !important;
+}
 
 
 
@@ -534,7 +877,6 @@ body { font-family: 'Inter', sans-serif; background: #F4F7FE; }
     display: flex;
     justify-content: center;
 }
-
 .form-card {
     background: white;
     padding: 40px;
@@ -543,7 +885,6 @@ body { font-family: 'Inter', sans-serif; background: #F4F7FE; }
     max-width: 600px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
-
 .form-header {
     display: flex;
     align-items: center;
@@ -551,30 +892,45 @@ body { font-family: 'Inter', sans-serif; background: #F4F7FE; }
     margin-bottom: 30px;
     color: #b30000; /* SCC Red */
 }
-
-.input-group {
-    margin-bottom: 20px;
+.complaint-form {
+    padding: 25px !important; /* Siguroha nga parehas ang padding sa tanang kilid */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Mao ni ang mopalinya sa tanan sa wala (left) */
+    width: 100%;
 }
-
+/* Container sa label ug select */
+.input-group {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 25px;
+    padding: 0 !important; /* Tangtangon ang extra padding diri */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box !important;
+}
 .input-group label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
 }
-
-.input-group select, .input-group textarea {
-    width: 100%;
+.input-group select,
+.input-group textarea,
+.pink-textarea,
+.upload-area-dashed {
+    width: 100% !important;
+    max-width: 100% !important;
     padding: 12px;
+    box-sizing: border-box !important; /* Importante para dili molapas sa tuo */
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-family: 'Inter', sans-serif;
 }
-
 .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-top: 20px;
+  width: 100% !important;
+    display: flex !important;
+    justify-content: center !important; /* MAO NI ANG MO-TUNGA */
+    margin-top: 30px;
+    padding: 0;
 }
 
 .btn-cancel {
@@ -582,4 +938,532 @@ body { font-family: 'Inter', sans-serif; background: #F4F7FE; }
     color: #666;
     padding: 12px 25px;
     border-radius: 8px;
+}
+/* --- FORM BOX DESIGN --- */
+/* Card Container Adjustment */
+.complaint-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 850px; /* Mas lapad na siya karon */
+    margin: 30px auto;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.card-header {
+padding: 15px 25px;
+    text-align: left; /* Siguroha ang 'Complaint Details' naa sa left */
+}
+
+/* Para sa Category Dropdown */
+.form-input,
+select.form-input,
+.textarea-pink,
+.pink-input-box,
+.upload-box-pink,
+.upload-area-dashed {
+    width: 100% !important;      /* Full width base sa card */
+    max-width: 100% !important;   /* Proteksyon */
+    box-sizing: border-box !important; /* I-apil ang padding sa width calculation */
+    display: block;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+/* Pink Inputs Style */
+.pink-input-box {
+    background-color: #fff5f5 !important; /* Light pink */
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    height: 180px; /* Mas dako nga sulatanan */
+    padding: 15px;
+    resize: none;
+}
+
+.pink-upload-area {
+    background-color: #fff5f5;
+    border: 2px dashed #f8d7da; /* Dashed pink border */
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #888;
+}
+
+/* Mao ni ang mopa-center sa button */
+.btn-submit-red, .btn-submit-maroon {
+  width: 280px !important; /* Gidak-on sa button base sa Figma */
+    max-width: 100%;
+    padding: 12px 0;
+    background-color: #a31010;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+}
+
+/* Horizontal Stepper Styling */
+.tracking-container {
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 850px;
+    margin: 20px auto;
+}
+
+.horizontal-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.step-icon {
+    background: #4a7c44; /* Green check circle */
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-num {
+    background: #e59a9a; /* Pinkish-red circle */
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* --- STEPPER DESIGN --- */
+.stepper-box {
+    background-color: #f0f1f3;
+    padding: 15px 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+
+    margin: 20px 0; /* para mo align sa left */
+}
+.step { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #555; }
+.step.active { color: #059669; font-weight: 700; }
+
+.step-circle { width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 11px; }
+.step-circle.check { background-color: #059669; }
+.step-circle.num { background-color: #F87171; }
+
+.step-line { width: 50px; height: 1px; border-bottom: 2px dashed #ccc; }
+
+.track-info { text-align: center; font-size: 12px; color: #888; }
+
+/* --- SIDEBAR DROPDOWN SYSTEM --- */
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu li {
+    width: 100%;
+}
+
+.dropdown-btn {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    cursor: pointer;
+}
+
+.arrow-icon {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+    margin-right: 15px;
+}
+
+/* Kani ang mag-tago sa sub-menu */
+.nav-menu li.active a {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    margin-bottom: 5px;
+}
+
+
+
+
+.dropdown-container li a:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+
+/* UTILITY CLASSES PARA SA JAVASCRIPT */
+.show-dropdown {
+    display: block !important;
+}
+
+.rotate-arrow {
+    transform: rotate(90deg);
+}
+
+/* ACTIVE STATE PARA SA DROPDOWN */
+.nav-item-dropdown.active > .dropdown-btn {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Card Container */
+.complaint-card-main {
+    width: 100% !important;
+    max-width: 900px !important;    /* Kinahanglan parehas sa stepper box */
+    margin: 30px 0 !important;      /* Tupong sa wala */
+    padding: 40px 60px !important;
+    box-sizing: border-box !important;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Pink Input Fields */
+.pink-textarea {
+    background-color: #fff2f2 !important; /* Soft pink background */
+    border: 1px solid #f8d7da !important;
+    border-radius: 5px;
+    height: 120px;
+    width: 100%;
+    padding: 10px;
+}
+
+.upload-area-dashed {
+    background-color: #fff2f2;
+    border: 1.5px dashed #f5c6cb; /* Dashed pink border */
+    padding: 30px;
+    text-align: center;
+    border-radius: 5px;
+    color: #6c757d;
+    font-size: 13px;
+}
+.status-stepper-box, .status-tracking-container {
+   width: 100% !important;
+    max-width: 900px !important;    /* KINI DAPAT PAREHAS SA DUHA */
+    margin-left: 0 !important;      /* Itupong sa wala */
+    margin-right: 0 !important;
+    box-sizing: border-box !important; /* Siguroha nga ang padding dili mopadako sa box */
+    display: block !important;
+
+}
+.stepper-content {
+display: flex;
+    justify-content: center; /* I-center ang steps sulod sa box */
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+}
+/* --- ALIGNMENT FIX FOR STATUS STEPPER & MAIN CARD --- */
+.status-stepper-box,
+.complaint-card-main {
+    width: 100% !important;
+    max-width: 900px !important; /* parehas width sa duha */
+    margin: 20px 0 !important; /* align sa left */
+    padding: 40px 60px !important; /* same padding */
+    box-sizing: border-box !important;
+    border-radius: 12px;
+}
+
+/* Stepper specific background */
+.status-stepper-box {
+    width: 100% !important;
+    max-width: 900px !important;       /* Parehas sa complaint card */
+    margin: 30px auto !important;      /* center horizontally */
+    padding: 40px 60px !important;     /* Parehas sa complaint card */
+    box-sizing: border-box !important;
+    border-radius: 12px;
+    background: #eeeeee;
+}
+
+/* Complaint card specific design */
+.complaint-card-main {
+    background: white;
+    border: 1px solid #e0e0e0;
+}
+/* Stepper Icons */
+.step-circle-icon {
+    background: #4a7c44; /* Green for success */
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-circle-num {
+    background: #e59a9a; /* Pinkish-red for pending */
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.green-text { color: #4a7c44; font-weight: 600; }
+
+.complaint-card-main, .form-container-3d {
+ width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-top: 20px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+
+    /* MAO NI ANG SOLUSYON PARA BALANSE */
+    padding: 40px 60px !important; /* 40px sa taas/ubos, 60px sa WALA ug TUO */
+
+    box-sizing: border-box !important; /* Importante para dili molapas */
+    display: block;
+}
+.track-footer {
+    text-align: center;      /* Center the text horizontally */
+    width: 100%;             /* Take full width so centering works */
+    margin-top: 15px;        /* Optional spacing from the stepper */
+    font-size: 14px;
+    color: #555;
+    font-weight: 600;
+}
+
+
+
+/* Layout para sa Review Page */
+.review-layout {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+/* --- COMPLAINT REVIEW PAGE STYLES --- */
+
+/* Main Container for the Review Page */
+.review-content-container {
+    display: flex;
+    gap: 25px;
+    padding: 20px;
+    align-items: flex-start;
+    background-color: #f4f7fe; /* Light neutral background */
+    min-height: 100vh;
+}
+
+/* Left Section: Complaint Details */
+.complaint-details-card {
+    flex: 2; /* 66% width */
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.student-profile-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #fdfdfd;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #f0f0f0;
+    margin-bottom: 25px;
+}
+
+.profile-avatar {
+    width: 55px;
+    height: 55px;
+    background: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    font-size: 1.5rem;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.label-text {
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.value-text {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.description-content {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    min-height: 150px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* Right Section: Actions */
+.review-actions {
+    flex: 1; /* 33% width */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.action-card, .activity-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.action-card h3, .activity-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.response-area {
+    width: 100%;
+    height: 120px;
+    resize: vertical;
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+}
+
+.response-area:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-update {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-update:hover {
+    background: #0056b3;
+}
+
+.btn-delete-text {
+    background: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-delete-text:hover {
+    background: #dc3545;
+    color: white;
+}
+
+/* Activity Timeline */
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.activity-list li {
+    position: relative;
+    padding-left: 25px;
+    padding-bottom: 20px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.activity-list li .dot {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background: #ced4da;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.activity-list li .dot.active {
+    background: #28a745;
+    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.15);
+}
+
+.activity-list li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 15px;
+    width: 2px;
+    height: 100%;
+    background: #e9ecef;
+    z-index: 1;
+}
+
+.activity-list li:last-child::before {
+    display: none;
+}
+
+.activity-time {
+    display: block;
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 2px;
+}
+
+/* Responsive Tweak */
+@media (max-width: 992px) {
+    .review-content-container {
+        flex-direction: column;
+    }
+    .complaint-details-card, .review-actions {
+        flex: none;
+        width: 100%;
+    }
 }

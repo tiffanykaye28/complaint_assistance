@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Portal - SCC</title>
-    
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="dashboard-wrapper">
@@ -20,101 +19,136 @@
                 </div>
             </div>
             <nav class="nav-menu">
-                        <ul>
-                            <li>
-                                <a href="{{ url_for('student_home') }}">
-                                    <i class="fas fa-home"></i> Home
-                                </a>
-                            </li>
+                <ul>
+                    <li class="{{ 'active' if request.endpoint == 'student_home' else '' }}">
+                        <a href="{{ url_for('student_home') }}">
+                            <i class="fas fa-home"></i> <span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item-dropdown">
+                        <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown()">
+                            <i class="fas fa-envelope"></i>
+                            <span>Complaints</span>
+                        </a>
+                        <ul class="dropdown-container" id="complaintsDropdown">
                             <li>
                                 <a href="{{ url_for('submit_complaint') }}">
-                                    <i class="fas fa-envelope"></i> Complaints
+                                    <i class="fas fa-chevron-right sub-icon"></i> <span>New Complaint</span>
                                 </a>
                             </li>
-                            <li><i class="fas fa-bell"></i> Notifications</li>
-                            <li><i class="fas fa-user"></i> Account</li>
-                            <li class="logout">
-                                <a href="{{ url_for('logout') }}">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
+                            <li>
+                                <a href="{{ url_for('student_home') }}">
+                                    <i class="fas fa-chevron-right sub-icon"></i> <span>My Complaints</span>
                                 </a>
                             </li>
                         </ul>
-                    </nav>
+                    </li>
+                    <li><a href="#"><i class="fas fa-bell"></i> <span>Notifications</span></a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> <span>Account</span></a></li>
+                    <li class="logout"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                </ul>
+            </nav>
         </aside>
 
         <main class="main-panel">
             <header class="top-header">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search">
-                </div>
-                <div class="user-profile">
-                    <i class="fas fa-bell"></i>
-                    <div class="avatar"></div>
-                    <span>{{ user.student_id }} <i class="fas fa-chevron-down"></i></span>
+                <div class="Home"><h2>Home</h2></div>
+                <div class="header-right">
+                    <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search"></div>
+                    <div class="user-meta">
+                        <img src="{{ url_for('static', filename='images/notifbell.png') }}" class="custom-bell">
+                        <div class="avatar"></div>
+                        <span>{{ user.student_id }}</span>
+                    </div>
                 </div>
             </header>
 
-            <section class="welcome-hero">
-                <h1>Welcome, {{ user.full_name if user.full_name else user.student_id }}</h1>
-                <p>Submit and track your complaints easily and securely.</p>
-                <a href="{{ url_for('submit_complaint') }}" class="btn-submit-new">
-                  <i class="fas fa-plus-square"></i> Submit New Complaint
-                 </a>
-            </section>
+            <div class="dashboard-content-wrapper">
+                <section class="welcome-hero">
+                    <h1>Welcome, {{ user.full_name }}</h1>
+                    <p>Submit and track your complaints easily and securely.</p>
+                </section>
 
-            <div class="status-grid">
-                <div class="s-card">
-                    <div class="icon orange"><i class="fas fa-clock"></i></div> 
-                    <div><p>Pending</p> <h3>{{ complaints|selectattr('status', 'equalto', 'Pending')|list|length }}</h3></div>
+                <div class="submit-complaint-container">
+                    <a href="{{ url_for('submit_complaint') }}" class="btn-submit-new">
+                        <i class="fas fa-plus-square"></i> Submit New Complaint
+                    </a>
                 </div>
-                <div class="s-card">
-                    <div class="icon blue"><i class="fas fa-search"></i></div> 
-                    <div><p>In Review</p> <h3>0</h3></div>
-                </div>
-                <div class="s-card">
-                    <div class="icon green"><i class="fas fa-check-circle"></i></div> 
-                    <div><p>Resolved</p> <h3>{{ complaints|selectattr('status', 'equalto', 'Resolved')|list|length }}</h3></div>
-                </div>
-                <div class="s-card">
-                    <div class="icon purple"><i class="fas fa-file-alt"></i></div> 
-                    <div><p>Total Submitted</p> <h3>{{ complaints|length }}</h3></div>
-                </div>
-            </div>
 
-            <div class="table-container">
-                <div class="table-header">
-                    <h3>Recent Complaints</h3>
-                    <div class="table-actions">
-                        <input type="text" placeholder="Type here">
-                        <button class="btn-search">Search</button>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon pending"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><p>Pending</p><h3>1</h3></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon review"><i class="fas fa-search"></i></div>
+                        <div class="stat-info"><p>In Review</p><h3>0</h3></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon resolved"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><p>Resolved</p><h3>1</h3></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon total"><i class="fas fa-file-alt"></i></div>
+                        <div class="stat-info"><p>Total Submitted</p><h3>{{ complaints|length }}</h3></div>
                     </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th><th>Description</th><th>Category</th><th>Date</th><th>Status</th><th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for complaint in complaints %}
-                        <tr>
-                            <td>#{{ complaint.id }}</td>
-                            <td>{{ complaint.student_name }}</td> 
-                            <td>{{ complaint.category }}</td>
-                            <td>{{ complaint.date_posted }}</td>
-                            <td><span class="status-pill {{ complaint.status.lower() }}">{{ complaint.status }}</span></td>
-                            <td><button class="btn-view">View</button></td>
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td colspan="6" style="text-align: center; padding: 20px;">No complaints found.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Recent Complaints</h3>
+                        <div class="table-search-box">
+                            <input type="text" placeholder="Type here" class="table-input">
+                            <button class="btn-table-search"><i class="fas fa-search"></i> Search</button>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Date <i class="fas fa-chevron-down"></i></th>
+                                <th>Status <i class="fas fa-chevron-down"></i></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for complaint in complaints %}
+                            <tr>
+                                <td>#{{ complaint.id }}</td>
+                                <td>{{ complaint.description }}</td>
+                                <td>{{ complaint.category }}</td>
+                                <td>{{ complaint.date_posted }}</td>
+<td>
+    <span class="status-pill {{ (complaint.status or 'pending').lower() }}">
+        {{ complaint.status or 'Pending' }}
+    </span>
+</td>                                <td><button class="btn-view">View</button></td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" style="text-align: center;">No complaints found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>
+
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("complaintsDropdown");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+    </script>
 </body>
 </html>
