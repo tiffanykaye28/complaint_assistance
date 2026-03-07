@@ -196,7 +196,6 @@ def admin_complaints():
     if session.get('user_role') != 'staff':
         return redirect(url_for('login'))
 
-    # Kuhaon ang search query ug filters gikan sa URL (e.g., ?search=scc-001)
     search_query = request.args.get('search', '')
     category_filter = request.args.get('category', 'All Categories')
     status_filter = request.args.get('status', 'All Statuses')
@@ -233,6 +232,30 @@ def admin_complaints():
 def logout():
     session.clear()
     return redirect(url_for('login'))
+
+@app.route('/admin/complaints/view/<int:id>')
+def admin_complaints_view(id):
+    if session.get('user_role') != 'staff':
+        return redirect(url_for('login'))
+
+    complaint = Complaint.query.get_or_404(id)
+    return render_template('admin_complaints_view.html', complaint=complaint)
+
+@app.route('/admin/complaints/view/<int:id>/update_status', methods=['POST'])
+def update_complaint_status(id):
+    if session.get('user_role') != 'staff':
+        return redirect(url_for('login'))
+
+    complaint = Complaint.query.get_or_404(id)
+    new_status = request.form.get('status')  # status sent from form
+    if new_status:
+        complaint.status = new_status
+        db.session.commit()
+        flash(f"Complaint #{id} status updated to {new_status}!")
+
+    # Redirect back to the same complaint view page
+    return redirect(url_for('admin_complaints_view', id=id))
+
 
 
 if __name__ == '__main__':

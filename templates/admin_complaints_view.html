@@ -43,6 +43,7 @@
             </header>
 
             <div class="dashboard-content-wrapper review-layout">
+                <!-- Complaint Details Section -->
                 <section class="complaint-details-card">
                     <div class="card-header">
                         <h3>Complaint Details</h3>
@@ -67,7 +68,9 @@
                         </div>
                         <div class="grid-item">
                             <p class="label-text">Status</p>
-                            <span class="status-pill {{ complaint.status.lower() }}">{{ complaint.status }}</span>
+                            <span class="status-pill {{ (complaint.status or 'Pending').lower().replace(' ', '-') }}">
+                                {{ complaint.status or 'Pending' }}
+                            </span>
                         </div>
                         <div class="grid-item">
                             <p class="label-text">Date Reported</p>
@@ -91,15 +94,17 @@
                     </div>
                 </section>
 
+                <!-- Sidebar: Actions & Activity -->
                 <aside class="review-actions">
+                    <!-- Update Status Form -->
                     <div class="action-card">
                         <h3>Update Status</h3>
-                        <form action="{{ url_for('resolve_complaint', id=complaint.id) }}" method="POST">
+                        <form action="{{ url_for('update_complaint_status', id=complaint.id) }}" method="POST">
                             <div class="input-group">
                                 <select name="new_status" class="form-input">
-                                    <option value="Pending" {{ 'selected' if complaint.status == 'Pending' }}>Pending</option>
-                                    <option value="In Progress" {{ 'selected' if complaint.status == 'In Progress' }}>In Progress</option>
-                                    <option value="Resolved" {{ 'selected' if complaint.status == 'Resolved' }}>Resolved</option>
+                                    <option value="Pending" {% if complaint.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                    <option value="In Progress" {% if complaint.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                                    <option value="Resolved" {% if complaint.status == 'Resolved' %}selected{% endif %}>Resolved</option>
                                 </select>
                             </div>
                             <div class="input-group">
@@ -113,6 +118,7 @@
                         </form>
                     </div>
 
+                    <!-- Activity Log -->
                     <div class="activity-card">
                         <h3>Activity</h3>
                         <ul class="activity-list">

@@ -89,13 +89,12 @@
                                 <td><strong>{{ complaint.student_name }}</strong></td>
                                 <td>{{ complaint.category }}</td>
                                 <td>
-                                    <span class="status-pill {{ complaint.status.lower().replace(' ', '-') }}">
-                                        {{ complaint.status }}
+                                <span class="status-pill {{ (complaint.status or 'Pending').lower().replace(' ', '-') }}">                                        {{ complaint.status }}
                                     </span>
                                 </td>
                                 <td>{{ complaint.date_posted }}</td>
                                 <td class="action-buttons">
-                                    <a href="{{ url_for('admin_complaints_review', id=complaint.id) }}" class="btn-table-view">View</a>
+                                    <a href="{{ url_for('admin_complaints_view', id=complaint.id) }}" class="btn-table-view">View</a>
                                     <button class="btn-table-resolve">Resolve</button>
                                 </td>
                             </tr>
