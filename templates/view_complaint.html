@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaint Details</title>
+</head>
+<body>
+
+<h2>Complaint #{{ complaint.id }}</h2>
+
+<p><strong>Category:</strong> {{ complaint.category }}</p>
+<p><strong>Description:</strong> {{ complaint.description }}</p>
+<p><strong>Status:</strong> {{ complaint.status }}</p>
+<p><strong>Date:</strong> {{ complaint.date_posted }}</p>
+
+<a href="{{ url_for('student_all_complaints') }}">Back</a>
+
+</body>
+</html>

@@ -26,20 +26,19 @@
                         </a>
                     </li>
 
-                    <li class="nav-item-dropdown">
+                    <li class="nav-item-dropdown {% if request.endpoint in ['submit_complaint', 'view_complaints'] %}active{% endif %}">
                         <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown()">
-                            <i class="fas fa-envelope"></i>
-                            <span>Complaints</span>
+                            <i class="fas fa-envelope"></i> <span>Complaints</span>
                         </a>
                         <ul class="dropdown-container" id="complaintsDropdown">
                             <li>
                                 <a href="{{ url_for('submit_complaint') }}">
-                                    <i class="fas fa-chevron-right sub-icon"></i> <span>New Complaint</span>
+                                    <i class="fas fa-plus-square sub-icon"></i> <span>New Complaint</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url_for('student_home') }}">
-                                    <i class="fas fa-chevron-right sub-icon"></i> <span>My Complaints</span>
+                                <a href="{{ url_for('student_all_complaints') }}">
+                                    <i class="fas fa-folder-open sub-icon"></i> <span>My Complaints</span>
                                 </a>
                             </li>
                         </ul>
@@ -122,11 +121,14 @@
                                 <td>{{ complaint.description }}</td>
                                 <td>{{ complaint.category }}</td>
                                 <td>{{ complaint.date_posted }}</td>
-<td>
-    <span class="status-pill {{ (complaint.status or 'pending').lower() }}">
-        {{ complaint.status or 'Pending' }}
-    </span>
-</td>                                <td><button class="btn-view">View</button></td>
+                                <td>
+                                    <span class="status-pill {{ (complaint.status or 'pending').lower() }}">
+                                        {{ complaint.status or 'Pending' }}
+                                    </span>
+                                </td>                                
+                                <td><a href="{{ url_for('view_complaint', complaint_id=complaint.id) }}" class="btn-view">
+                                        View
+                                    </a></td>
                             </tr>
                             {% else %}
                             <tr>
@@ -142,12 +144,8 @@
 
     <script>
         function toggleDropdown() {
-            var dropdown = document.getElementById("complaintsDropdown");
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            } else {
-                dropdown.style.display = "block";
-            }
+            document.querySelector(".nav-item-dropdown")
+                .classList.toggle("active");
         }
     </script>
 </body>

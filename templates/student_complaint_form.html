@@ -20,21 +20,25 @@
             </div>
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li class="{{ 'active' if request.endpoint == 'student_home' else '' }}">
+                        <a href="{{ url_for('student_home') }}">
+                            <i class="fas fa-home"></i> <span>Home</span>
+                        </a>
+                    </li>
 
-                    <li class="nav-item-dropdown">
-                        <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown()">
+                    <li class="nav-item-dropdown {% if request.endpoint in ['submit_complaint', 'view_complaints'] %}active{% endif %}">
+                        <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown(this)">
                             <i class="fas fa-envelope"></i>
                             <span>Complaints</span>
                         </a>
-                        <ul class="dropdown-container show-dropdown" id="complaintsDropdown">
+                        <ul class="dropdown-container">
                             <li class="sub-active">
-<a href="{{ url_for('submit_complaint') }}">
-    <i class="fas fa-plus-square sub-icon"></i> <span>New Complaint</span>
+                                <a href="{{ url_for('submit_complaint') }}">
+                                    <i class="fas fa-plus-square sub-icon"></i> <span>New Complaint</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url_for('student_home') }}">
+                                <a href="{{ url_for('student_all_complaints') }}">
                                     <i class="fas fa-folder-open sub-icon"></i> <span>My Complaints</span>
                                 </a>
                             </li>
@@ -123,3 +127,11 @@
     </div>
     <p class="track-footer">Track the progress of your complaint below.</p>
 </div>
+</body>
+<script>
+    function toggleDropdown() {
+            document.querySelector(".nav-item-dropdown")
+                .classList.toggle("active");
+        }
+</script>
+</html>

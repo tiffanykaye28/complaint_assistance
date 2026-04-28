@@ -1,10 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Complaints - SCC</title>
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="dashboard-wrapper">
+    <aside class="sidebar">
+                <div class="sidebar-header">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+                    <div class="brand">
+                        <h3>ST. CECILIA'S SCHOOL</h3>
+                        <p>COMPLAINT ASSISTANCE</p>
+                    </div>
+                </div>
+                <nav class="nav-menu">
+                    <ul>
+                        <li class="{{ 'active' if request.endpoint == 'student_home' else '' }}">
+                            <a href="{{ url_for('student_home') }}">
+                                <i class="fas fa-home"></i> <span>Home</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item-dropdown {% if request.endpoint in ['submit_complaint', 'view_complaints'] %}active{% endif %}">
+                            <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown(this)">
+                                <i class="fas fa-envelope"></i>
+                                <span>Complaints</span>
+                            </a>
+                            <ul class="dropdown-container">
+                                <li>
+                                    <a href="{{ url_for('submit_complaint') }}">
+                                        <i class="fas fa-plus-square sub-icon"></i> <span>New Complaint</span>
+                                    </a>
+                                </li>
+                                <li class="sub-active">
+                                    <a href="{{ url_for('student_all_complaints') }}">
+                                        <i class="fas fa-folder-open sub-icon"></i> <span>My Complaints</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li><a href="#"><i class="fas fa-bell"></i> <span>Notifications</span></a></li>
+                        <li><a href="#"><i class="fas fa-user"></i> <span>Account</span></a></li>
+                        <li class="logout"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                    </ul>
+                </nav>
+        </aside>
+
+    <!-- MAIN -->
+    <main class="main-panel">
+
+        <!-- HEADER -->
+        <header class="top-header">
+            <div class="Submit a Complaint"><h2>My Complaints</h2></div>
+
+            <div class="header-right">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search">
+                </div>
+
+                <div class="user-meta">
+                    <img src="{{ url_for('static', filename='images/notifbell.png') }}" class="custom-bell">
+                    <div class="avatar"></div>
+                    <span>{{ user.student_id }}</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="dashboard-content-wrapper">
+
+            <div class="page-intro">
+                <h1>My Submitted Complaints</h1>
+                <p>View all your submitted complaints and their current status.</p>
+            </div>
+
+            <!-- TABLE -->
+            <div class="complaint-table-container">
+
+                <table class="complaint-table">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Date Submitted</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for complaint in complaints %}
+                        <tr>
+                            <td>#{{ complaint.id }}</td>
+                            <td>{{ complaint.category }}</td>
+                            <td>{{ complaint.description }}</td>
+                            <td>{{ complaint.date_posted }}</td>
+                            <td>
+                                <span class="status-pill {{ (complaint.status or 'pending').lower() }}">
+                                    {{ complaint.status or 'Pending' }}
+                                </span>
+                                <a href="{{ url_for('view_complaint', complaint_id=complaint.id) }}" class="btn-view">
+                                        View
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align:center;">
+                                No complaints submitted yet.
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+</div>
+<script>
+function toggleDropdown(el) {
+    const parent = el.closest('.nav-item-dropdown');
+    parent.classList.toggle('active');
+}
+</script>
 </body>
 </html>

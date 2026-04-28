@@ -2,9 +2,191 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Departments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+            <div class="brand">
+                <h3>ST. CECILIA'S SCHOOL</h3>
+                <p>COMPLAINT ASSISTANCE</p>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <!-- DASHBOARD -->
+                <li>
+                    <a href="{{ url_for('admin_dashboard_route') }}">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- COMPLAINTS -->
+                <li>
+                    <a href="{{ url_for('admin_complaints') }}">
+                        <i class="fas fa-envelope"></i>
+                        <span>Complaints</span>
+                    </a>
+                </li>
+
+                <!-- DEPARTMENTS -->
+                <li class="nav-item-dropdown active">
+                    <div class="dropdown-btn">
+                        <div>
+                            <i class="fas fa-building"></i>
+                            <span>Departments</span>
+                        </div>
+                    </div>
+
+                    <ul class="dropdown-container">
+
+                        <li>
+                            <a href="{{ url_for('academic_departments') }}">
+                                <i class="fas fa-graduation-cap sub-icon"></i>
+                                Academic Department
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ url_for('functional_departments') }}">
+                                <i class="fas fa-briefcase sub-icon"></i>
+                                Functional Department
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <!-- USERS (optional future use) -->
+                <li>
+                    <a href="#">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+
+                <!-- LOGOUT -->
+                <li class="logout">
+                    <a href="{{ url_for('logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </aside>
+
+<!-- MAIN PANEL -->
+<main class="main-panel">
+
+    <header class="top-header">
+        <div class="Home">
+            <h2>Departments</h2>
+        </div>
+    </header>
+
+    <div class="dashboard-content-wrapper">
+
+        <!-- TAB BUTTONS -->
+        <div class="table-header">
+            <button class="tab-btn active" onclick="showDept('academic')">Academic Department</button>
+            <button class="tab-btn" onclick="showDept('functional')">Functional Department</button>
+        </div>
+
+        <!-- ACADEMIC -->
+        <div id="academic" class="dept-section">
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Academic Departments</h3>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Description</th>
+                            <th>Head</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>College of Computer Studies</td>
+                            <td>IT and Computer Science programs</td>
+                            <td>Dr. Santos</td>
+                        </tr>
+                        <tr>
+                            <td>College of Education</td>
+                            <td>Teacher education programs</td>
+                            <td>Prof. Reyes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- FUNCTIONAL -->
+        <div id="functional" class="dept-section" style="display:none;">
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Functional Departments</h3>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Description</th>
+                            <th>Head</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Guidance Office</td>
+                            <td>Counseling and student support</td>
+                            <td>Ms. Cruz</td>
+                        </tr>
+                        <tr>
+                            <td>Registrar</td>
+                            <td>Student records and enrollment</td>
+                            <td>Mr. Lopez</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+<!-- FONT AWESOME (for icons) -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+function showDept(dept) {
+
+    document.getElementById("academic").style.display = "none";
+    document.getElementById("functional").style.display = "none";
+
+    document.getElementById(dept).style.display = "block";
+
+    // button active state
+    let buttons = document.querySelectorAll(".tab-btn");
+    buttons.forEach(btn => btn.classList.remove("active"));
+
+    event.target.classList.add("active");
+}
+</script>
 
 </body>
 </html>

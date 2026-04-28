@@ -4,32 +4,102 @@
     <meta charset="UTF-8">
     <title>SCC - Complaint Assistance</title>
     <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&family=Post+No+Bills+Jaffna:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="main-wrapper">
         <header class="top-nav">
+
             <div class="logo-section">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                <img class="side-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
                 <div class="logo-text">
                     <h1>ST. CECILIA'S SCHOOL</h1>
                     <p>COMPLAINT ASSISTANCE</p>
                 </div>
             </div>
+
             <nav class="nav-links">
-<a href="{{ url_for('login') }}" class="btn-login">Login</a>               
-<a href="{{ url_for('register') }}" class="btn-register">Register</a>            </nav>
+                <a href="{{ url_for('login') }}" class="btn-login">Login</a>               
+                <a href="{{ url_for('register') }}" class="btn-register">Register</a>            
+            </nav>
+
         </header>
 
         <section class="hero-content">
             <h1 class="main-title">Submit Your Concerns <span>Easily</span></h1>
             <p class="sub-text">A simple platform for students to report issues and track updates.</p>
         </section>
-
-        <footer class="button-footer">
+        <div class="button-container">
             <button class="btn-red" onclick="window.location.href='/register'">Submit a complaint</button>
-            <button class="btn-red">Track Status</button>
-        </footer>
+            <button class="btn-red" onclick="window.location.href='/register'">Track Status</button>
+        </div>
+
+        <!-- Feature Cards -->
+        <!-- Easy Submissions Card -->
+    <div class="featured-cards">
+        <div class="feature-card card-left">
+            <div class="icon-wrapper">
+                <div class="card-icon">
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                </div>
+            </div>
+            <div class="card-text-container text-rotated-left">
+                <div class="card-text">
+                    <p>Easy</p>
+                    <p>submissions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Track Status Card (Center) -->
+        <div class="feature-card card-center">
+            <div class="icon-wrapper">
+                <div class="card-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+            </div>
+            <div class="card-bg-center"></div>
+            <div class="card-text">
+                <p>Track</p>
+                <p>status</p>
+            </div>
+        </div>
+
+        <!-- Secure Confidential Card -->
+        <div class="feature-card card-right">
+            <div class="icon-wrapper">
+                <div class="card-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+            </div>    
+            <div class="card-text-container text-rotated-right">
+                <div class="card-text">
+                    <p>Secure</p>
+                    <p>confidential</p>
+                </div>
+            </div>
+        </div>    
+    </div>
+        <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bg"></div>
+        <div class="phone-icon">
+            <img src="./6e24636cebada75b2e4790c448b26bc492711420.png" alt="">
+        </div>
+        <p class="contact-title">Contact us</p>
+        <div class="email-icon">
+            <img src="./1014821925048665bcbb86bf6d129cd0ee00cc16.png" alt="">
+        </div>
+        <p class="phone-number">09062686021</p>
+        <p class="email-address">SCC_CompaintAssistance@gmail.com</p>
+        <div class="footer-logo">
+            <div class="footer-logo-overflow">
+                <img src="./b238bf7ccd55dc108ca3f002b87a447530e5d763.png" alt="">
+            </div>
+        </div>
+    </footer>
     </div>
 </body>
 </html> 

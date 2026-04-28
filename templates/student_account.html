@@ -2,9 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - SCC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+                <div class="brand">
+                    <h3>ST. CECILIA'S SCHOOL</h3>
+                    <p>COMPLAINT ASSISTANCE</p>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="{{ 'active' if request.endpoint == 'student_home' else '' }}">
+                        <a href="{{ url_for('student_home') }}">
+                            <i class="fas fa-home"></i> <span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item-dropdown {% if request.endpoint in ['submit_complaint', 'view_complaints'] %}active{% endif %}">
+                        <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown()">
+                            <i class="fas fa-envelope"></i> <span>Complaints</span>
+                        </a>
+                        <ul class="dropdown-container" id="complaintsDropdown">
+                            <li>
+                                <a href="{{ url_for('submit_complaint') }}">
+                                    <i class="fas fa-plus-square sub-icon"></i> <span>New Complaint</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('student_all_complaints') }}">
+                                    <i class="fas fa-folder-open sub-icon"></i> <span>My Complaints</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="fas fa-bell"></i> <span>Notifications</span></a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> <span>Account</span></a></li>
+                    <li class="logout"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-panel">
+                <header class="top-header">
+                    <div class="breadcrumb">
+                        <h2>Account Settings</h2>
+                    </div>
+                    <div class="header-right">
+                        <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search"></div>
+                        <div class="user-meta">
+                            <i class="fas fa-bell"></i>
+                            <div class="avatar"></div>
+                            <span>Admin <i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>
+                </header>
+                <div class="sub-header">
+                    <h1>Personal Information</h1>
+                    <h3>Update your photo and Personal datails here</h3>
+                </div>
+
+                <div class="dashboard-content-wrapper settings-page">
+
+                    <div class="table-container" style="max-width:500px;">
+                        <div class="profile-icon">
+                            <i class="fa-solid fa-circle-user"></i>
+                        </div>
+                        <div class="table-header-username">
+                            <h3>{{ user.full_name or "Admin" }}</h3>
+                        </div>
+                        
+                        <form method="POST">
+                            <div class="input-line">
+                                <label>Email</label>
+                                <input type="email" name="email" value="{{ user.email }}">
+                            </div>
+
+                            <div class="input-line">
+                                <label>New Password</label>
+                                <input type="password" name="password" placeholder="Enter new password">
+                            </div>
+
+                            <div style="margin-top:20px;">
+                                <button type="submit" class="btn-filter-action">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+    </div>
 
 </body>
 </html>

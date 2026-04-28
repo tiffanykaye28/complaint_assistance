@@ -2,9 +2,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints List - Admin SCC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="admin-page">
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+                    <div class="sidebar-header">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+                        <div class="brand">
+                            <h3>ST. CECILIA'S SCHOOL</h3>
+                            <p>COMPLAINT ASSISTANCE</p>
+                        </div>
+                    </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('admin_dashboard_route') }}">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
 
+                    <li>
+                        <a href="{{ url_for('admin_complaints') }}">
+                            <i class="fas fa-envelope"></i>
+                            <span>Complaints</span>
+                        </a>
+                    </li>
+
+                    <!-- DEPARTMENTS MAIN -->
+                    <li class="nav-item-dropdown">
+
+                        <div class="dropdown-btn" onclick="toggleDeptDropdown(event)">
+                            <i class="fas fa-building"></i>
+                            <span>Departments</span>
+                        </div>
+
+                        <ul class="dropdown-container">
+                            <li>
+                                <a href="{{ url_for('academic_departments') }}">
+                                    <i class="fas fa-graduation-cap sub-icon"></i>
+                                    <span>Academic Department</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url_for('functional_departments') }}">
+                                    <i class="fas fa-briefcase sub-icon"></i>
+                                    <span>Functional Department</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                    <li class="active">
+                        <a href="{{ url_for('admin_categories') }}">
+                            <i class="fas fa-tags"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('admin_settings') }}">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+
+                    <li class="logout">
+                        <a href="{{ url_for('logout') }}">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+<main class="main-panel">
+    
+    <!-- HEADER -->
+    <header class="top-header">
+        <div class="header-left">
+            <h2>Categories</h2>
+        </div>
+
+        <div class="header-right">
+            <div class="search-bar">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" placeholder="Search category">
+            </div>
+
+            <i class="fa-solid fa-bell notification-bell"></i>
+
+            <div class="user-profile-header">
+                <div class="avatar-small"></div>
+                <span>Admin <i class="fa-solid fa-chevron-down"></i></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="dashboard-content-wrapper">
+
+        <!-- ADD CATEGORY -->
+        <div class="filters-container">
+            <input type="text" placeholder="New Category Name" class="filter-date">
+            <button class="btn-filter-action">Add Category</button>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-container">
+            <div class="table-header-title">
+                <h3>Category List</h3>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Category Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>#{{ loop.index }}</td>
+                        <td><strong>{{ category }}</strong></td>
+                        <td class="action-buttons">
+                            <button class="btn-table-view">Edit</button>
+                            <button class="btn-table-resolve">Delete</button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" style="text-align:center;">No categories found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</main>
+    </div>
+    <script>
+        function toggleDeptDropdown(event) {
+        event.preventDefault();
+        const dropdown = event.target.closest('.nav-item-dropdown');
+        dropdown.classList.toggle('active');
+    }
+    </script>
 </body>
 </html>

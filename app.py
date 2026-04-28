@@ -31,7 +31,17 @@ class Complaint(db.Model):
     # Dynamic date format para sa reports
     date_posted = db.Column(db.String(20), default=lambda: datetime.now().strftime("%m/%d/%y"))
 
+class Department(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    type = db.Column(db.String(50))  # Academic or Functional
+    description = db.Column(db.Text)
+    head = db.Column(db.String(100))
 
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    
 # 3. AUTO-CREATE DB AND ADMIN
 with app.app_context():
     db.create_all()
@@ -63,7 +73,11 @@ def login():
 
         # 1. Admin Hardcoded Check
         if username == "admin@gmail.com" and password == "admin123":
+            admin = User.query.filter_by(email="admin@gmail.com").first()
+
+            session['user_id'] = admin.id   # ✅ ADD THIS
             session['user_role'] = 'staff'
+
             return redirect(url_for('admin_dashboard_route'))
 
         # 2. Database Check (Pangitaon ang user base sa Email o ID)
@@ -84,6 +98,7 @@ def login():
         return redirect(url_for('login'))
 
     return render_template('login.html')
+
 @app.route('/admin_dashboard')
 def admin_dashboard_route():
     if session.get('user_role') != 'staff':
@@ -119,6 +134,65 @@ def admin_dashboard_route():
                                trend_values=trend_values)
     except Exception as e:
         return f"Error: {e}"
+    
+@app.route('/admin/departments')
+def admin_departments():
+    if session.get('user_role') != 'staff':
+        return redirect(url_for('login'))
+
+    return render_template('admin_departments.html')
+    
+@app.route('/admin/departments/academic')
+def academic_departments():
+    if session.get('user_role') != 'staff':
+        return redirect(url_for('login'))
+    return render_template('academic_departments.html')
+
+
+@app.route('/admin/departments/functional')
+def functional_departments():
+    if session.get('user_role') != 'staff':
+        return redirect(url_for('login'))
+    return render_template('functional_departments.html')
+
+@app.route('/admin/categories')
+def admin_categories():
+    if session.get('user_role') != 'staff':
+        return redirect(url_for('login'))
+
+    # Get all unique categories from complaints
+    categories = db.session.query(Complaint.category).distinct().all()
+
+    # Convert list of tuples → list of strings
+    categories = [c[0] for c in categories]
+
+    return render_template('admin_categories.html', categories=categories)
+
+@app.route('/admin/settings', methods=['GET', 'POST'])
+def admin_settings():
+    if session.get('user_role') != 'staff':
+        return redirect(url_for('login'))
+
+    # Get current admin user
+    admin_user = User.query.filter_by(email="admin@gmail.com").first()
+
+    if request.method == 'POST':
+        new_email = request.form.get('email')
+        new_password = request.form.get('password')
+
+        if new_email:
+            admin_user.email = new_email
+
+        if new_password:
+            admin_user.password = new_password
+
+        db.session.commit()
+        flash("Settings updated successfully!")
+
+        return redirect(url_for('admin_settings'))
+
+    return render_template('admin_settings.html', user=admin_user)
+  
 @app.route('/student_home')
 def student_home():
     if 'user_id' not in session:
@@ -129,6 +203,18 @@ def student_home():
     user_complaints = Complaint.query.filter_by(student_name=current_user.student_id).all()
     return render_template('student_home.html', user=current_user, complaints=user_complaints)
 
+@app.route('/student_account')
+def student_account():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    current_user = User.query.get(session['user_id'])
+
+    # safety check (important to avoid 500 errors)
+    if not current_user:
+        return redirect(url_for('login'))
+
+    return render_template('student_account.html', user=current_user)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -172,6 +258,34 @@ def submit_complaint():
 
     return render_template('student_complaint_form.html', user=current_user)
 
+@app.route('/student_all_complaints')
+def student_all_complaints():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    current_user = User.query.get(session['user_id'])
+
+    # 🔴 safety check
+    if not current_user:
+        return redirect(url_for('login'))
+
+    complaints = Complaint.query.filter_by(
+        student_name=current_user.student_id
+    ).order_by(Complaint.id.desc()).all()
+
+    return render_template(
+        'student_all_complaints.html',
+        user=current_user,
+        complaints=complaints
+    )
+@app.route('/complaint/<int:complaint_id>')
+def view_complaint(complaint_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    complaint = Complaint.query.get_or_404(complaint_id)
+
+    return render_template('view_complaint.html', complaint=complaint)
 
 @app.route('/resolve_complaint/<int:id>')
 def resolve_complaint(id):
@@ -185,11 +299,6 @@ def resolve_complaint(id):
     return redirect(url_for('admin_dashboard_route'))
 
 
-@app.route('/admin/complaint/<int:id>')
-def admin_complaints_review(id):  # KINI NGA NGALAN DAPAT MATCH SA url_for
-    if session.get('user_role') != 'staff':
-        return redirect(url_for('login'))
-    # ... rest of the code
 
 @app.route('/admin/complaints')
 def admin_complaints():
@@ -255,7 +364,6 @@ def update_complaint_status(id):
 
     # Redirect back to the same complaint view page
     return redirect(url_for('admin_complaints_view', id=id))
-
 
 
 if __name__ == '__main__':

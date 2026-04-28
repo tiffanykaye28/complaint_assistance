@@ -23,20 +23,39 @@
             <h1 class="create-text">Create Account</h1>
             <p class="sub-instruction">Let's get started !</p>
             
-            <form action="/register" method="POST"> <div class="input-line">
-        <input type="text" name="full_name" placeholder="Full Name" required>
-    </div>
-    <div class="input-line">
-        <input type="email" name="email" placeholder="Email" required>
-    </div>
-    <div class="input-line">
-        <input type="text" name="student_id" placeholder="School ID" required>
-    </div>
-    <div class="input-line">
-        <input type="password" name="password" placeholder="Password" required>
-    </div>
-    <button type="submit" class="btn-confirm">Confirm Account</button>
-</form>
+            <form action="/register" method="POST">
+    
+                <div class="input-line">
+                    <input type="text" name="full_name" placeholder="Full Name" required>
+                </div>
+
+                <div class="input-line">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+
+                <div class="input-line">
+                    <input type="text" name="student_id" placeholder="School ID" required>
+                </div>
+
+                <!-- ✅ COURSE DROPDOWN -->
+                <div class="input-line">
+                    <select name="course_id" required>
+                        <option value="" disabled selected>Select Course</option>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.course_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="input-line">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+
+                <div class="register-buttons">
+                <button type="button" class="btn-back-reg" onclick="window.location.href='/'">Back</button>
+                <button type="submit" class="btn-confirm">Confirm Account</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>

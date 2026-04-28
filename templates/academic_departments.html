@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Review - SCC</title>
+    <title>Departments</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="admin-review-page">
-    <div class="dashboard-wrapper">
-        <aside class="sidebar">
+<body>
+
+<!-- SIDEBAR -->
+    <aside class="sidebar">
                 <div class="sidebar-header">
                     <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
                     <div class="brand">
@@ -37,13 +36,13 @@
                 <!-- DEPARTMENTS MAIN -->
                 <li class="nav-item-dropdown">
 
-                    <div class="dropdown-btn" onclick="toggleDeptDropdown(event)">
+                    <a href="{{ url_for('admin_departments') }}" class="dropdown-btn" onclick="toggleDeptDropdown(event)">
                         <i class="fas fa-building"></i>
                         <span>Departments</span>
-                    </div>
+                    </a>
 
                     <ul class="dropdown-container">
-                        <li>
+                        <li class="active">
                             <a href="{{ url_for('academic_departments') }}">
                                 <i class="fas fa-graduation-cap sub-icon"></i>
                                 <span>Academic Department</span>
@@ -74,7 +73,7 @@
                     </a>
                 </li>
 
-                <li class="active">
+                <li>
                     <a href="{{ url_for('admin_settings') }}">
                         <i class="fas fa-cog"></i>
                         <span>Settings</span>
@@ -90,67 +89,59 @@
             </ul>
         </nav>
     </aside>
+<!-- MAIN PANEL -->
+<main class="main-panel">
 
-            <main class="main-panel">
-                <header class="top-header">
-                    <div class="breadcrumb">
-                        <h2>Account Settings</h2>
-                    </div>
-                    <div class="header-right">
-                        <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search"></div>
-                        <div class="user-meta">
-                            <i class="fas fa-bell"></i>
-                            <div class="avatar"></div>
-                            <span>Admin <i class="fas fa-chevron-down"></i></span>
-                        </div>
-                    </div>
-                </header>
-                <div class="sub-header">
-                    <h1>Personal Information</h1>
-                    <h3>Update your photo and Personal datails here</h3>
+    <header class="top-header">
+        <div class="Home">
+            <h2>Departments</h2>
+        </div>
+    </header>
+
+    <div class="dashboard-content-wrapper">
+
+        <!-- ACADEMIC -->
+        <div id="academic" class="dept-section">
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Academic Departments</h3>
                 </div>
 
-                <div class="dashboard-content-wrapper settings-page">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Description</th>
+                            <th>Head</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>College of Computer Studies</td>
+                            <td>IT and Computer Science programs</td>
+                            <td>Dr. Santos</td>
+                        </tr>
+                        <tr>
+                            <td>College of Education</td>
+                            <td>Teacher education programs</td>
+                            <td>Prof. Reyes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                    <div class="table-container" style="max-width:500px;">
-                        <div class="profile-icon">
-                            <i class="fa-solid fa-circle-user"></i>
-                        </div>
-                        <div class="table-header-username">
-                            <h3>{{ user.full_name or "Admin" }}</h3>
-                        </div>
+        </div>
 
-                        <form method="POST">
-                            
-                            <div class="input-line">
-                                <label>Email</label>
-                                <input type="email" name="email" value="{{ user.email }}">
-                            </div>
-
-                            <div class="input-line">
-                                <label>New Password</label>
-                                <input type="password" name="password" placeholder="Enter new password">
-                            </div>
-
-                            <div style="margin-top:20px;">
-                                <button type="submit" class="btn-filter-action">
-                                    Save Changes
-                                </button>
-                            </div>
-
-                        </form>
-                    </div>
-
-                </div>
-
-            </main>
+        <!-- FUNCTIONAL -->
     </div>
-    <script>
-        function toggleDeptDropdown(event) {
+</main>
+<script>
+    function toggleDeptDropdown(event) {
         event.preventDefault();
         const dropdown = event.target.closest('.nav-item-dropdown');
         dropdown.classList.toggle('active');
     }
-    </script>
+</script>
 </body>
 </html>

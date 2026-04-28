@@ -1,29 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body, html {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    height: 100%;
+    overflow-x: auto;
 }
 
 /* --- 2. LANDING PAGE ANIMATION --- */
 .main-wrapper {
-    height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow: hidden;
-    animation: backgroundSlideshow 10s infinite ease-in-out;
-    background-size: cover;
-    background-position: center;
-}
-
-@keyframes backgroundSlideshow {
-    0%, 45% { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/static/images/img1.png'); }
-    55%, 100% { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/static/images/img2.png'); }
 }
 
 /* --- 3. HEADER & WHITE LINKS (Plain Text) --- */
@@ -32,10 +25,17 @@ body, html {
     justify-content: space-between;
     align-items: center;
     padding: 15px 50px;
-    background-color: rgba(102, 37, 37, 0.8);
-    z-index: 100;
-}
 
+    background: rgba(107, 33, 33, 0.849);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    transition: 0.3s ease;
+}
 .logo-section { display: flex; align-items: center; gap: 15px; color: white; }
 .logo-section img { height: 50px; }
 .logo-text h1 { font-family: 'Protest Strike', sans-serif; font-size: 22px; margin: 0; }
@@ -43,29 +43,57 @@ body, html {
 
 .top-nav nav {
     display: flex;
-    gap: 30px; 
+    gap: 35px;
 }
 
 .top-nav nav a {
-    color: #FFFFFF !important; 
-    text-decoration: none;      
+    position: relative;
+    color: #ffffff;
+    text-decoration: none;
     font-family: 'Protest Strike', sans-serif;
     font-size: 18px;
-    font-weight: normal;
-    transition: 0.3s;
+
+    padding: 5px 0;
+    transition: 0.3s ease;
 }
 
+.top-nav nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+
+    width: 0%;
+    height: 2px;
+    background-color: #fca5a5;
+
+    transition: 0.3s ease;
+}
+
+.top-nav nav a:hover::after {
+    width: 100%;
+}
 .top-nav nav a:hover {
-    color: #fca5a5 !important; 
+    color: #fca5a5;
+    transform: translateY(-2px);
 }
 
 /* --- 4. HERO CONTENT & SUB-TEXT --- */
 .hero-content {
+    min-height: 100vh;
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+
+    animation: backgroundSlideshow 10s infinite ease-in-out;
+    background-size: cover;
+    background-position: center;
+}
+@keyframes backgroundSlideshow {
+    0%, 45% { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/static/images/img1.png'); }
+    55%, 100% { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/static/images/img2.png'); }
 }
 
 .main-title {
@@ -92,8 +120,8 @@ body, html {
     z-index: 5;
 }
 
-/* --- 5. FOOTER --- */
-.button-footer {
+/* --- Submit and Track Buttons --- */
+.button-container {
     background-color: #fca5a5;
     padding: 35px;
     display: flex;
@@ -112,32 +140,146 @@ body, html {
     cursor: pointer;
     font-size: 18px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.3s ease;
 }
+
+.btn-red:hover {
+    background-color: #ff3b3b; /* brighter red */
+    transform: translateY(-5px) scale(1.05); /* lift + slight zoom */
+    box-shadow: 0 10px 20px rgba(218, 43, 43, 0.5); /* glow shadow */
+}
+/* --- 5. FEATURE CARDS (EASY SUBMISSION, TRACK COMPLAINTS) --- */
+.featured-cards {
+    display: flex;
+    justify-content: center;
+    height: 500px;
+    gap: 50px;
+    padding: 50px 0;
+    z-index: 10;
+    background-color: white;
+
+    text-decoration: none;  /* remove underline */
+    color: inherit;         /* keep text color */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feature-card.card-left {
+    background-color: #DFDFDF;
+    width: 200px;
+    height: 350px;
+    border-radius: 20px;
+    top: 50px;
+    position: relative;
+    font-family: 'Protest Strike', sans-serif;
+    transform: rotate(-10deg);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* vertical center */
+    align-items: center;      /* horizontal center */
+    gap: 20px;
+}
+.feature-card.card-left:hover {
+    transform:  rotate(-10deg) translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.card-text-container,
+.card-icon, .card-icon i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon-wrapper i {
+    font-size: 40px;
+    color: #000;
+}
+
+.card-text {
+    text-align: center;
+}
+.card-text p {
+    font-size: 20px;
+    color: #DD3131;
+}
+
+.feature-card.card-right {
+    background-color: #DFDFDF;
+    width: 200px;
+    height: 350px;
+    top: 50px;
+    border-radius: 20px;
+    position: relative;
+    font-family: 'Protest Strike', sans-serif;
+    transform: rotate(10deg);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* vertical center */
+    align-items: center;      /* horizontal center */
+    gap: 20px;
+}
+.feature-card.card-right:hover {
+    transform:  rotate(10deg) translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+
+.feature-card.card-center {
+    background-color: #DFDFDF;
+    width: 200px;
+    height: 350px;
+    border-radius: 20px;
+    font-family: 'Protest Strike', sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* vertical center */
+    align-items: center;      /* horizontal center */
+    gap: 20px;
+}
+.feature-card.card-center:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.footer{
+    background-color: rgba(102, 37, 37, 0.8);
+    color: white;
+    text-align: start;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+/* --- End sa style sa landing page--- */
+
 
 /* --- COLORS & FONTS --- */
 :root {
     --vibrant-red: #FF3131; /* Ang neon red nga imong ganahan */
     --soft-white: #FFFFFF;
+    --primary-red: #FF3131;
+    --bg-light: #F8F9FA;
+    --text-dark: #333;
+    --sidebar-width: 260px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
-
-/* ============================================================
-   7. AUTH PAGES (LOGIN & REGISTER) 
-   ============================================================ */
 
 /* SETUP PARA SA BODY */
 .form-body {
-    background-color: #2b2b2b !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    height: 100vh !important;
-    margin: 0 !important;
-    overflow: hidden;
+    background-color: #2b2b2b ;
+    display: flex ;
+    justify-content: center ;
+    align-items: center ;
+    height: 100vh ;
+    margin: 0 ;
+    overflow: auto;
 }
 
 /* MAIN CONTAINER */
 .form-container {
-    display: flex !important;
+    display: flex ;
     width: 950px;
     height: 550px;
     background-color: #DA2B2B; /* Pula nga side background */
@@ -198,15 +340,26 @@ body, html {
 .input-line {
     border-bottom: 2px solid #ddd;
     margin-bottom: 20px;
+    position: relative;
 }
 
-.input-line input {
+.input-line input,
+.input-line select {
     width: 100%;
     border: none;
     outline: none;
     padding: 10px 0;
     font-size: 16px;
     background: transparent;
+}
+
+/* Search Bar Input */
+.search-bar input {
+    border: none;
+    background: transparent;
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
 }
 
 /* RED SIDE (Images and Logo) */
@@ -218,16 +371,6 @@ body, html {
     padding: 30px;
     color: white;
 }
-
-.side-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.side-logo img { height: 50px; }
-.side-logo-text h2 { font-size: 14px; margin: 0; font-family: 'Protest Strike', sans-serif; }
-.side-logo-text p { font-size: 9px; margin: 0; }
 
 .teacher-img-right { position: absolute; bottom: 0; right: 0; height: 90%; }
 .teacher-img-left { position: absolute; bottom: 0; left: 0; height: 90%; }
@@ -286,16 +429,17 @@ body, html {
     display: flex;
     justify-content: center; /* I-center ang button sa puti nga side */
     margin-top: 30px;
+    gap: 15px;
 }
 
-.btn-confirm {
+.btn-back-reg, .btn-confirm {
     font-family: 'Protest Strike', sans-serif;
     font-size: 22px;
     color: white;
     background-color: #FF3131; /* Vibrant Red */
     
     /* Gidak-on: Lapad gyud dapat base sa Figma */
-    width: 280px; 
+    width: 200px; 
     height: 55px;
     
     border: none;
@@ -316,15 +460,7 @@ body, html {
     box-shadow: 0px 1px 0px #b32222;
 }
 
-/* --- REGISTER TEXT STROKE (CREATE ACCOUNT) --- */
-.create-text {
-    font-family: 'Protest Strike', sans-serif;
-    font-size: 60px;
-    color: white;
-    -webkit-text-stroke: 2.5px #FF3131; /* Pula nga outline */
-    line-height: 1;
-    margin-bottom: 5px;
-}
+/* --- REGISTER TEXT STROKE (CREATE ACCOUNT) - Consolidated with main .create-text */
 
 
 /* SUCCESS PAGE */
@@ -391,46 +527,168 @@ body, html {
 
 
 /* --- ADMIN DASHBOARD LAYOUT --- */
-:root {
-    --primary-red: #FF3131;
-    --bg-light: #F8F9FA;
-    --text-dark: #333;
-    --sidebar-width: 260px;
-    --shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-
 /* Sidebar Styling */
 .sidebar {
     width: var(--sidebar-width);
-    background-color: var(--primary-red);
+    background: linear-gradient(to bottom, #FF0000, #B50000);
     color: white;
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
+
     position: fixed;
+    top: 0;          /* ✅ add */
+    left: 0;         /* ✅ add */
     height: 100vh;
+
+    z-index: 1000;   /* 🔥 VERY IMPORTANT */
 }
 
-.sidebar-header .logo { width: 50px; margin-bottom: 15px; }
-.brand h3 { font-size: 16px; font-weight: 700; }
-.brand p { font-size: 10px; opacity: 0.8; }
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+.sidebar-header img {
+    width: 60px;
+    height: auto;
+}
 
-.nav-menu ul { list-style: none; margin-top: 40px; }
+.brand {
+    display: flex;
+    flex-direction: column;
+}
+.brand h3 { 
+    font-size: 16px; 
+    font-weight: 700; 
+}
+.brand p { 
+    font-size: 11px;
+    font-weight: 200; 
+    opacity: 0.9; 
+}
+
+.side-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.side-logo img { 
+    height: 50px; 
+}
+.side-logo-text h2 { 
+    font-size: 14px; 
+    margin: 0; 
+    font-family: 'Protest Strike', sans-serif; 
+}
+.side-logo-text p { 
+    font-size: 9px; 
+    margin: 0; 
+}
+
+/* ===== NAV CONTAINER ===== */
+
+/* ===== SIDEBAR LIST ===== */
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== LIST ITEM ===== */
 .nav-menu li {
-    padding: 15px;
-    border-radius: 12px;
+    width: 100%;
     margin-bottom: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 14px;
 }
-.nav-menu li.active, .nav-menu li:hover {
+
+/* ===== MAIN LINKS + DROPDOWN BUTTON (UNIFIED) ===== */
+.nav-menu li a,
+.nav-item-dropdown .dropdown-btn {
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer;
+    gap: 15px;
+
+    width: 100%;
+    padding: 12px 20px;
+
+    color: #fff;
+    text-decoration: none;
+
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 500;
+
+    box-sizing: border-box;
+    transition: 0.3s ease;
+}
+
+/* ===== ICON ===== */
+.nav-menu li i {
+    width: 28px;
+    font-size: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* ===== HOVER + ACTIVE ===== */
+.nav-menu li a:hover,
+.nav-menu li.active a,
+.nav-item-dropdown .dropdown-btn:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
-
+/* ===== DROPDOWN WRAPPER ===== */
+.nav-item-dropdown {
+    width: 100%;
 }
+
+/* ===== DROPDOWN CONTAINER ===== */
+.dropdown-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+/* OPEN DROPDOWN */
+.nav-item-dropdown.active .dropdown-container {
+    max-height: 500px;
+    display: block;
+}
+
+/* ===== SUB ITEMS ===== */
+.dropdown-container li {
+    width: 100%;
+}
+
+.dropdown-container li a {
+    padding: 10px 20px 10px 45px;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+/* SUB ACTIVE */
+.dropdown-container li.sub-active a {
+    background: white !important;
+    color: #DA2B2B !important;
+    font-weight: 700;
+}
+
+/* ===== LOGOUT ===== */
+.logout {
+    margin-top: auto;
+    margin-bottom: 30px;
+}
+
 .welcome-hero {
     padding-left: 120px !important;
     margin-top: 50px !important;
@@ -469,10 +727,12 @@ body, html {
 /* Cards */
 .stats-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px;
+    padding: 0 10px;
+    width: 100%;
 }
+
 .stat-card {
     background: white;
     padding: 25px;
@@ -480,40 +740,14 @@ body, html {
     box-shadow: var(--shadow);
     text-align: center;
 }
+
+.stat-card:hover {
+    transform: scale(1.05);
+    transition: 1s;
+}
+
 .stat-card .label { font-size: 12px; color: #888; text-transform: uppercase; }
 
-
-
-/* 1. Highlight para sa Main Label (Complaints) */
-/* Gigamit nato ang .active > a para ang main link ra ang mo-pula/highlight */
-.nav-menu li.active > a {
-    background: rgba(255, 255, 255, 0.2); /* Translucent highlight */
-    border-radius: 12px;
-    margin-bottom: 5px;
-}
-
-/* 2. Highlight para sa Sub-item (New Complaint) */
-/* Kani ang mo-puti gyud ang background base sa imong gusto */
-.dropdown-container li.sub-active a {
-    background-color: white !important; /* Puti nga box */
-    color: #DA2B2B !important;          /* Pula ang text */
-    border-radius: 8px;
-    margin: 5px 15px;                   /* Para naay indentation */
-    font-weight: 700;
-}
-
-/* Siguroha nga ang icon sa sulod sa puti nga box mo-pula sab */
-.dropdown-container li.sub-active a i {
-    color: #DA2B2B !important;
-}
-
-/* Sub-icon spacing */
-.sub-icon {
-    font-size: 14px;
-    margin-right: 10px;
-}
-
-.submit-complaint-container,
 .stat-card,
 .table-container {
 background: white !important;
@@ -522,6 +756,7 @@ background: white !important;
 
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+/* TABLE HEADER FLEXBOX */
 .table-header {
     display: flex;
     justify-content: space-between;
@@ -532,6 +767,33 @@ table {
     width: 100% !important;
     border-collapse: collapse !important;
     table-layout: fixed; /* Para dili mag-wild ang width sa columns */
+}
+.table-search-box {
+    display: flex;
+    gap: 10px;
+}
+.table-input {
+    padding: 8px 15px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 220px;
+    outline: none;
+}
+
+.btn-table-search {
+    background-color: #185BFF !important; /* Brighter blue parehas sa Figma */
+    color: white !important;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif !important;/* TABLE HEADER BACKGROUND (GRAY BAR) */
+
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
 }
 thead tr {
     background-color: #E5E7EB !important;
@@ -581,91 +843,59 @@ td {
     border-radius: 6px !important;
     cursor: pointer;
     font-weight: 500;
-}
-.sidebar {
-    background: linear-gradient(90deg, #FF0000 44%, #B50000 100%);
-    width: 260px;
-    height: 100vh;
-    position: fixed;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-}
-
-.sidebar-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 30px 25px;
-}
-
-.logo {
-    width: 45px;
-}
-
-.brand h3 {
-    font-size: 13px;
-    margin: 0;
-    white-space: nowrap;
-}
-
-.brand p {
-    font-size: 9px;
-    margin: 0;
-    opacity: 0.9;
-}
-
-.nav-menu ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-    width: 100%; /* Gamita ang full width sa sidebar */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-menu li {
-    width: 100%;
-    margin-bottom: 5px;
-}
-.nav-menu li a {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 15px;
-    padding: 12px 20px;
-    color: white;
     text-decoration: none;
-    border-radius: 12px;
-    transition: 0.3s ease;
-}
-.nav-menu li i {
-    width: 25px;
-    font-size: 18px;
-    text-align: center;
 }
 
-.nav-menu li span {
-    font-size: 14px;
-    font-weight: 500;
+/* TABLE ACTION BUTTONS */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
-.nav-menu li.active a,
-.nav-menu li a:hover {
-    background: rgba(255, 255, 255, 0.2);
+.btn-table-view {
+    background-color: #185BFF !important;
+    color: white !important;
+    border: none !important;
+    padding: 4px 12px !important;
+    border-radius: 4px !important;
+    cursor: pointer;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    display: inline-block;
+    transition: background-color 0.3s ease;
 }
-.logout {
-    margin-top: auto;
-    margin-bottom: 30px;
+
+.btn-table-view:hover {
+    background-color: #0d4bb5 !important;
 }
+
+.btn-table-resolve {
+    background-color: #00E676 !important;
+    color: white !important;
+    border: none !important;
+    padding: 4px 12px !important;
+    border-radius: 4px !important;
+    cursor: pointer;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    transition: background-color 0.3s ease;
+}
+
+.btn-table-resolve:hover {
+    background-color: #00c853 !important;
+}
+
+/* Main Panel */
 .main-panel {
     margin-left: var(--sidebar-width);
     flex: 1;
     padding: 0;
-    }
+
+    position: relative;  /* ✅ add */
+    z-index: 1;          /* ✅ add */
+}
 .top-header {
     background-color: white;
     display: flex;
@@ -727,8 +957,6 @@ td {
     border-radius: 50%;
 }
 
-
-
 .s-card {
     background: white;
     padding: 20px;
@@ -743,11 +971,24 @@ td {
     padding: 30px 45px !important;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     gap: 25px;
     width: 100%;
     box-sizing: border-box;
-    }
-    .page-intro h1, .page-intro p {
+}
+.dashboard-content-wrapper.review-layout{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;    
+    justify-content: space-between;
+    
+    width: 100%;
+    max-width: 1400px;   /* 👈 key */
+    margin: 0 auto;      /* 👈 centers it */
+
+    gap: 20px;
+}
+.page-intro h1, .page-intro p {
     margin-left: 0;
     text-align: left;
     width: 100%;
@@ -779,24 +1020,7 @@ background: white !important;
 }
 
 /* 3. ANG STATUS CARDS NGA MAG-ABAY */
-.stats-container {
-display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important; /* 4 columns para mo-abot sa tuo */
-    gap: 20px;
-    width: 100% !important;
-    margin: 0 !important;
-}
-
-.stat-card {
-    background: white;
-    flex: 1;
-    padding: 20px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06); /* Shadow para sa gagmay nga boxes */
-}
+/* Removed duplicate - consolidated with main stats-container */
 
 /* 4. DESIGN PARA SA ICONS SA BOXES */
 .stat-icon {
@@ -818,58 +1042,6 @@ display: grid !important;
     font-size: 20px;
     margin-right: 5px; /* Match sa padding sa button */
 }
-
-/* STATUS PILLS */
-.status-pill.pending { background: #FFEDED; color: #FF3131; }
-.status-pill.resolved { background: #E7F9EE; color: #2ECC71; }
-/* TABLE HEADER FLEXBOX */
-.table-header {
-    display: flex;
-    justify-content: space-between; /* I-distansya ang title ug search */
-    align-items: center;
-    margin-bottom: 20px;
-}
-.table-search-box {
-    display: flex;
-    gap: 10px;
-}
-
-.table-input {
-    padding: 8px 15px;
-    border: 1px solid #E5E7EB;
-    border-radius: 8px;
-    font-size: 14px;
-    width: 220px;
-    outline: none;
-}
-
-.btn-table-search {
-    background-color: #185BFF !important; /* Brighter blue parehas sa Figma */
-    color: white !important;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-family: 'Poppins', sans-serif !important;/* TABLE HEADER BACKGROUND (GRAY BAR) */
-
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}
-
-thead tr {
-    background-color: #E5E7EB !important; /* Grayish header bar */
-}
-
-th {
-    color: #4B5563 !important;
-    font-weight: 600 !important;
-    padding: 12px 15px !important;
-}
-
-
-
 /*SUBMIT COMPLAINT*/
 
 .form-section {
@@ -1067,21 +1239,8 @@ select.form-input,
 .track-info { text-align: center; font-size: 12px; color: #888; }
 
 /* --- SIDEBAR DROPDOWN SYSTEM --- */
-.nav-menu ul {
-    list-style: none;
-    padding: 0;
-}
 
-.nav-menu li {
-    width: 100%;
-}
 
-.dropdown-btn {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    cursor: pointer;
-}
 
 .arrow-icon {
     font-size: 10px;
@@ -1090,11 +1249,6 @@ select.form-input,
 }
 
 /* Kani ang mag-tago sa sub-menu */
-.nav-menu li.active a {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    margin-bottom: 5px;
-}
 
 
 
@@ -1119,16 +1273,7 @@ select.form-input,
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Card Container */
-.complaint-card-main {
-    width: 100% !important;
-    max-width: 900px !important;    /* Kinahanglan parehas sa stepper box */
-    margin: 30px 0 !important;      /* Tupong sa wala */
-    padding: 40px 60px !important;
-    box-sizing: border-box !important;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-}
+/* Card Container - Consolidated */
 
 /* Pink Input Fields */
 .pink-textarea {
@@ -1149,15 +1294,7 @@ select.form-input,
     color: #6c757d;
     font-size: 13px;
 }
-.status-stepper-box, .status-tracking-container {
-   width: 100% !important;
-    max-width: 900px !important;    /* KINI DAPAT PAREHAS SA DUHA */
-    margin-left: 0 !important;      /* Itupong sa wala */
-    margin-right: 0 !important;
-    box-sizing: border-box !important; /* Siguroha nga ang padding dili mopadako sa box */
-    display: block !important;
-
-}
+/* Consolidated with main .status-stepper-box definition */
 .stepper-content {
 display: flex;
     justify-content: center; /* I-center ang steps sulod sa box */
@@ -1166,17 +1303,6 @@ display: flex;
     width: 100%;
 }
 /* --- ALIGNMENT FIX FOR STATUS STEPPER & MAIN CARD --- */
-.status-stepper-box,
-.complaint-card-main {
-    width: 100% !important;
-    max-width: 900px !important; /* parehas width sa duha */
-    margin: 20px 0 !important; /* align sa left */
-    padding: 40px 60px !important; /* same padding */
-    box-sizing: border-box !important;
-    border-radius: 12px;
-}
-
-/* Stepper specific background */
 .status-stepper-box {
     width: 100% !important;
     max-width: 900px !important;       /* Parehas sa complaint card */
@@ -1187,51 +1313,21 @@ display: flex;
     background: #eeeeee;
 }
 
-/* Complaint card specific design */
 .complaint-card-main {
+    width: 100% !important;
+    max-width: 900px !important;
+    margin: 20px auto!important;
+    padding: 40px 60px !important;
+    box-sizing: border-box !important;
+    border-radius: 12px;
     background: white;
     border: 1px solid #e0e0e0;
 }
-/* Stepper Icons */
-.step-circle-icon {
-    background: #4a7c44; /* Green for success */
-    color: white;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.step-circle-num {
-    background: #e59a9a; /* Pinkish-red for pending */
-    color: white;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* Stepper Icons - Consolidated with main step-icon/step-num definitions */
 
 .green-text { color: #4a7c44; font-weight: 600; }
 
-.complaint-card-main, .form-container-3d {
- width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-top: 20px;
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-
-    /* MAO NI ANG SOLUSYON PARA BALANSE */
-    padding: 40px 60px !important; /* 40px sa taas/ubos, 60px sa WALA ug TUO */
-
-    box-sizing: border-box !important; /* Importante para dili molapas */
-    display: block;
-}
+/* Consolidated with main .complaint-card-main definition */
 .track-footer {
     text-align: center;      /* Center the text horizontally */
     width: 100%;             /* Take full width so centering works */
@@ -1455,6 +1551,21 @@ display: flex;
     font-size: 0.75rem;
     color: #999;
     margin-top: 2px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #e5e7eb;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+.tab-btn.active {
+    background: #DA2B2B;
+    color: white;
 }
 
 /* Responsive Tweak */
