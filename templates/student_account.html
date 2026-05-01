@@ -50,55 +50,63 @@
             </nav>
         </aside>
 
-        <main class="main-panel">
-                <header class="top-header">
-                    <div class="breadcrumb">
-                        <h2>Account Settings</h2>
-                    </div>
-                    <div class="header-right">
-                        <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search"></div>
-                        <div class="user-meta">
-                            <i class="fas fa-bell"></i>
-                            <div class="avatar"></div>
-                            <span>Admin <i class="fas fa-chevron-down"></i></span>
-                        </div>
-                    </div>
-                </header>
-                <div class="sub-header">
-                    <h1>Personal Information</h1>
-                    <h3>Update your photo and Personal datails here</h3>
+<main class="main-panel">
+    <header class="top-header">
+        <div class="breadcrumb">
+            <h2>Account Settings</h2>
+        </div>
+        <div class="header-right">
+            <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search"></div>
+            <div class="user-meta">
+                <i class="fas fa-bell"></i>
+                <div class="avatar"></div>
+                <!-- Usba gikan sa Admin ngadto sa Student -->
+                <span>Student <i class="fas fa-chevron-down"></i></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="sub-header">
+        <h1>Personal Information</h1>
+        <h3>Update your details and course information here</h3>
+    </div>
+
+    <div class="dashboard-content-wrapper settings-page">
+        <div class="table-container" style="max-width:500px;">
+            <div class="profile-icon">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <div class="table-header-username">
+                <!-- Ipakita ang tinuod nga ngalan sa Student -->
+                <h3>{{ user.full_name }}</h3>
+                <p style="color: gray; font-size: 0.9em;">{{ user.course }}</p>
+            </div>
+            
+            <form method="POST">
+                <div class="input-line">
+                    <label>School ID</label>
+                    <input type="text" value="{{ user.student_id }}" readonly style="background-color: #f0f0f0;">
                 </div>
 
-                <div class="dashboard-content-wrapper settings-page">
-
-                    <div class="table-container" style="max-width:500px;">
-                        <div class="profile-icon">
-                            <i class="fa-solid fa-circle-user"></i>
-                        </div>
-                        <div class="table-header-username">
-                            <h3>{{ user.full_name or "Admin" }}</h3>
-                        </div>
-                        
-                        <form method="POST">
-                            <div class="input-line">
-                                <label>Email</label>
-                                <input type="email" name="email" value="{{ user.email }}">
-                            </div>
-
-                            <div class="input-line">
-                                <label>New Password</label>
-                                <input type="password" name="password" placeholder="Enter new password">
-                            </div>
-
-                            <div style="margin-top:20px;">
-                                <button type="submit" class="btn-filter-action">
-                                    Save Changes
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                <div class="input-line">
+                    <label>Email</label>
+                    <input type="email" name="email" value="{{ user.email }}">
                 </div>
-            </main>
+
+                <div class="input-line">
+                    <label>New Password</label>
+                    <input type="password" name="password" placeholder="Leave blank to keep current">
+                </div>
+
+                <div style="margin-top:20px;">
+                    <button type="submit" class="btn-filter-action">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
     </div>
 
 </body>

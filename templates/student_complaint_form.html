@@ -25,13 +25,11 @@
                             <i class="fas fa-home"></i> <span>Home</span>
                         </a>
                     </li>
-
-                    <li class="nav-item-dropdown {% if request.endpoint in ['submit_complaint', 'view_complaints'] %}active{% endif %}">
-                        <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown(this)">
-                            <i class="fas fa-envelope"></i>
-                            <span>Complaints</span>
+                    <li class="nav-item-dropdown active">
+                        <a href="javascript:void(0)" class="dropdown-btn" onclick="toggleDropdown()">
+                            <i class="fas fa-envelope"></i> <span>Complaints</span>
                         </a>
-                        <ul class="dropdown-container">
+                        <ul class="dropdown-container" style="display: block;">
                             <li class="sub-active">
                                 <a href="{{ url_for('submit_complaint') }}">
                                     <i class="fas fa-plus-square sub-icon"></i> <span>New Complaint</span>
@@ -44,7 +42,6 @@
                             </li>
                         </ul>
                     </li>
-
                     <li><a href="#"><i class="fas fa-bell"></i> <span>Notifications</span></a></li>
                     <li><a href="#"><i class="fas fa-user"></i> <span>Account</span></a></li>
                     <li class="logout"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
@@ -54,7 +51,7 @@
 
         <main class="main-panel">
             <header class="top-header">
-                <div class="Submit a Complaint"><h2>Submit a Complaint</h2></div>
+                <div class="page-title"><h2>Submit a Complaint</h2></div>
                 <div class="header-right">
                     <div class="search-bar"><i class="fas fa-search"></i><input type="text" placeholder="Search"></div>
                     <div class="user-meta">
@@ -66,72 +63,126 @@
             </header>
 
             <div class="dashboard-content-wrapper">
-    <div class="page-intro">
-        <h1>Submit a complaint</h1>
-        <p>Use the form below to submit your complaint. Our team will review and address it promptly.</p>
-    </div>
-
-    <div class="complaint-card-main">
-        <div class="card-header">
-            <h3>Complaint Details</h3>
-        </div>
-
-        <form action="{{ url_for('submit_complaint') }}" method="POST" class="complaint-form">
-            <div class="input-group">
-                <label>Category</label>
-                <div class="select-wrapper">
-                    <select name="category" class="form-input">
-                        <option>Teacher Issue</option>
-                        <option>Academic</option>
-                        <option>Bullying</option>
-                        <option>Facility Issue</option>
-                    </select>
+                <div class="page-intro">
+                    <h1>Submit a complaint</h1>
+                    <p>Use the form below to submit your complaint. Our team will review and address it promptly.</p>
                 </div>
-            </div>
 
-            <div class="input-group">
-                <label>Description</label>
-                <textarea name="description" class="form-input pink-textarea" placeholder="Enter details..."></textarea>
-            </div>
+                <div class="complaint-card-main">
+                    <div class="card-header">
+                        <h3>Complaint Details</h3>
+                    </div>
 
-            <div class="input-group">
-                <label>Upload photo (Optional)</label>
-                <div class="upload-area-dashed">
-                    <p>Drag and drop image or click to upload</p>
+                    <!-- ✅ Added enctype for file uploads -->
+                    <form action="{{ url_for('submit_complaint') }}" method="POST" class="complaint-form" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <label>Category</label>
+                            <div class="select-wrapper">
+                                <select name="category" class="form-input" required>
+                                    <option value="" disabled selected>Select a category</option>
+                                    <option>Teacher Issue</option>
+                                    <option>Academic Concerns</option>
+                                    <option>Bullying</option>
+                                    <option>Facility Issue</option>
+                                    <option>Scholarship</option>
+                                    <option>Lost & Found Items</option>
+                                    <option>Disciplinary/Conduct Issue</option>
+                                    <option>Student Organizations/Clubs</option>
+                                    <option>Tuition & Fees Discrepancy</option>
+                                    <option>Clearance/Refund Issue</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Description</label>
+                            <textarea name="description" class="form-input pink-textarea" placeholder="Enter details..." required></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Upload photo (Optional)</label>
+                            <input type="file" name="complaint_photo" id="fileInput" style="display: none;" accept="image/*">
+                            
+                            <div class="upload-area-dashed" id="dropZone">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #800000; margin-bottom: 10px;"></i>
+                                <p id="file-message">Drag and drop image or click to upload</p>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-submit-maroon">Submit complaint</button>
+                        </div>
+                    </form>
                 </div>
-            </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn-submit-maroon">Submit complaint</button>
+                <!-- Status Stepper remains as is -->
+                <div class="status-stepper-box">
+                    <div class="stepper-content">
+                        <div class="step completed">
+                            <div class="step-circle-icon"><i class="fas fa-check"></i></div>
+                            <span class="step-label green-text">Submit complaint</span>
+                        </div>
+                        <div class="step-line-dashed">----------</div>
+                        <div class="step">
+                            <div class="step-circle-num">2</div>
+                            <span class="step-label">Under review</span>
+                        </div>
+                        <div class="step-line-dashed">----------</div>
+                        <div class="step">
+                            <div class="step-circle-num">3</div>
+                            <span class="step-label">Resolve</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="track-footer">Track the progress of your complaint below.</p>
             </div>
-        </form>
+        </main>
     </div>
 
-    <div class="status-stepper-box">
-        <div class="stepper-content">
-            <div class="step completed">
-                <div class="step-circle-icon"><i class="fas fa-check"></i></div>
-                <span class="step-label green-text">Submit complaint</span>
-            </div>
-            <div class="step-line-dashed">----------</div>
-            <div class="step">
-                <div class="step-circle-num">2</div>
-                <span class="step-label">Under review</span>
-            </div>
-            <div class="step-line-dashed">----------</div>
-            <div class="step">
-                <div class="step-circle-num">3</div>
-                <span class="step-label">Resolve</span>
-            </div>
-        </div>
-    </div>
-    <p class="track-footer">Track the progress of your complaint below.</p>
-</div>
-</body>
-<script>
-    function toggleDropdown() {
-            document.querySelector(".nav-item-dropdown")
-                .classList.toggle("active");
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileMessage = document.getElementById('file-message');
+
+        // Click to upload
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        // Handle file selection via dialog
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                fileMessage.innerHTML = `<span style="color: #28a745;">Selected: ${this.files[0].name}</span>`;
+                dropZone.style.borderColor = "#28a745";
+            }
+        });
+
+        // Drag and Drop events
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = "#fce4ec";
+            dropZone.style.borderColor = "#800000";
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.backgroundColor = "transparent";
+            dropZone.style.borderColor = "#ccc";
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = "transparent";
+            
+            if (e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files;
+                fileMessage.innerHTML = `<span style="color: #28a745;">Dropped: ${e.dataTransfer.files[0].name}</span>`;
+                dropZone.style.borderColor = "#28a745";
+            }
+        });
+
+        function toggleDropdown() {
+            const dropdown = document.querySelector(".nav-item-dropdown");
+            dropdown.classList.toggle("active");
         }
-</script>
+    </script>
+</body>
 </html>

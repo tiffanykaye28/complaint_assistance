@@ -114,11 +114,11 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                      <tbody>
                             {% for complaint in complaints %}
                             <tr>
                                 <td>#{{ complaint.id }}</td>
-                                <td>{{ complaint.description }}</td>
+                                <td>{{ complaint.description[:50] }}{% if complaint.description|length > 50 %}...{% endif %}</td>
                                 <td>{{ complaint.category }}</td>
                                 <td>{{ complaint.date_posted }}</td>
                                 <td>
@@ -126,9 +126,11 @@
                                         {{ complaint.status or 'Pending' }}
                                     </span>
                                 </td>                                
-                                <td><a href="{{ url_for('view_complaint', complaint_id=complaint.id) }}" class="btn-view">
+                                <td>
+                                    <a href="{{ url_for('view_complaint', complaint_id=complaint.id) }}" class="btn-view">
                                         View
-                                    </a></td>
+                                    </a>
+                                </td>
                             </tr>
                             {% else %}
                             <tr>

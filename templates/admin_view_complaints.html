@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Review - SCC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-review-page">
+    <div class="dashboard-wrapper">
+        <!-- Sidebar remains same as your code -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+                <div class="brand">
+                    <h3>ST. CECILIA'S SCHOOL</h3>
+                    <p>COMPLAINT ASSISTANCE</p>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+<li><a href="{{ url_for('admin_dashboard_route') }}"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>                    <li class="active"><a href="{{ url_for('admin_complaints') }}"><i class="fas fa-envelope"></i> <span>Complaints</span></a></li>
+                    <!-- Add other nav items here -->
+                    <li class="logout"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-panel">
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <h2>Complaint #{{ complaint.id }} <span class="separator">></span> <small>Review Details</small></h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-meta">
+                        <i class="fas fa-bell"></i>
+                        <div class="avatar"></div>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content-wrapper review-layout">
+                <!-- LEFT SECTION: Complaint Details -->
+                <section class="complaint-details-card">
+                    <div class="card-header">
+                        <h3>Complaint Information</h3>
+                    </div>
+
+                    <div class="student-info-section">
+                        <p class="label-text">Submitted By</p>
+                        <div class="student-profile-box">
+                            <div class="profile-avatar"></div>
+                            <div class="profile-details">
+                                <strong>{{ student.full_name if student else complaint.student_name }}</strong>
+                                <span>Student ID: {{ complaint.student_id }}</span>
+                                <small>{{ student.email if student else 'no-email@scc.edu.ph' }}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="details-grid">
+                        <div class="grid-item">
+                            <p class="label-text">Category</p>
+                            <p class="value-text">{{ complaint.category }}</p>
+                        </div>
+                        <div class="grid-item">
+                            <p class="label-text">Assigned Department</p>
+                            <p class="value-text" style="font-weight: 600; color: #800000;">
+                                {{ complaint.department }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="description-box">
+                        <p class="label-text">Description</p>
+                        <div class="description-content">
+                            {{ complaint.description }}
+                        </div>
+                    </div>
+
+                    <!-- ✅ PHOTO EVIDENCE SECTION -->
+                    <div class="evidence-box" style="margin-top: 20px;">
+                        <p class="label-text">Evidence / Photo Attached</p>
+                        {% if complaint.image_file %}
+                        <div class="photo-preview-container">
+                            <img src="{{ url_for('static', filename='uploads/' + complaint.image_file) }}" 
+                                 alt="Evidence" 
+                                 style="max-width: 100%; border-radius: 8px; margin-top: 10px; border: 1px solid #ddd;">
+                            <br>
+                            <a href="{{ url_for('static', filename='uploads/' + complaint.image_file) }}" target="_blank" style="font-size: 0.8rem; color: #800000;">
+                                <i class="fas fa-external-link-alt"></i> View Full Image
+                            </a>
+                        </div>
+                        {% else %}
+                        <p class="value-text" style="font-style: italic; color: #999;">No photo uploaded.</p>
+                        {% endif %}
+                    </div>
+                </section>
+
+                <!-- RIGHT SECTION: Actions & Activity -->
+                <aside class="review-actions">
+                    <div class="action-card">
+                        <h3>Take Action</h3>
+                        <form action="{{ url_for('update_complaint_status', id=complaint.id) }}" method="POST">
+                            <div class="input-group">
+                                <label>Set Status</label>
+                                <select name="new_status" class="form-input">
+                                    <option value="Pending" {% if complaint.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                    <option value="In Progress" {% if complaint.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                                    <option value="Resolved" {% if complaint.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Admin Remarks / Response</label>
+                                <textarea name="admin_comment" placeholder="Provide feedback to student..." class="form-input response-area" style="height: 100px;"></textarea>
+                            </div>
+                            <div class="button-group">
+                                <button type="submit" class="btn-update" style="background-color: #800000; color: white; width: 100%; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+                                    Submit Update
+                                </button>
+                                <a href="{{ url_for('admin_complaints') }}" class="btn-back" style="display: block; text-align: center; margin-top: 10px; color: #666; text-decoration: none; font-size: 0.9rem;">
+                                    Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="activity-card">
+                        <h3>Log Activity</h3>
+                        <ul class="activity-list" style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 15px; border-left: 2px solid #800000; padding-left: 10px;">
+                                <p style="font-size: 0.9rem; margin: 0;">Current Status: <strong>{{ complaint.status }}</strong></p>
+                                <small style="color: #888;">Updated by Admin - Current</small>
+                            </li>
+                            <li style="border-left: 2px solid #ddd; padding-left: 10px;">
+                                <p style="font-size: 0.9rem; margin: 0;">Complaint Submitted</p>
+                                <small style="color: #888;">by {{ student.full_name if student else complaint.student_name }} - {{ complaint.date_posted }}</small>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleDeptDropdown(e) {
+            e.stopPropagation();
+            const container = e.currentTarget.nextElementSibling;
+            container.style.display = container.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>

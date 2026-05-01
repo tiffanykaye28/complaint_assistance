@@ -8,22 +8,39 @@
 </head>
 <body class="form-body">
     <div class="form-container">
+        <!-- White Side: Login Form -->
         <div class="form-white-side login-curve">
             <h1 class="welcome-text">Welcome Cecilian</h1>
-            <p class="sub-instruction">Please Login to access our website</p>
+            <p class="sub-instruction">Please login using your School ID</p>
 
             <form action="/login" method="POST">
+                <!-- ✅ Giusab para School ID na lang ang pangayoon -->
                 <div class="input-line">
-                    <input type="text" name="email_or_id" placeholder="Student ID or School Email" required>
+                    <input type="text" name="student_id" placeholder="School ID (e.g. SCC-00-12345678)" required>
                 </div>
-                <div class="input-line"><input type="password" name="password" placeholder="Enter Password" required></div>
+                
+                <div class="input-line">
+                    <input type="password" name="password" placeholder="Enter Password" required>
+                </div>
+
+                <!-- ✅ Forgot Password Link para sa Gmail/Yahoo notification -->
+                <div class="forgot-pass-container" style="text-align: right; margin-bottom: 20px;">
+                    <a href="/forgot_password" style="color: #800000; font-size: 0.85rem; text-decoration: none;">Forgot Password?</a>
+                </div>
+
                 <div class="login-buttons">
                     <button type="button" class="btn-back" onclick="window.location.href='/'">Back</button>
                     <button type="submit" class="btn-login-submit">Login</button>
                 </div>
             </form>
+
+            <!-- ✅ Register link kay student-only registration man ta -->
+            <p class="register-prompt" style="margin-top: 20px; font-size: 0.9rem;">
+                New Cecilian? <a href="/register" style="color: #FF3131; font-weight: bold;">Create an Account</a>
+            </p>
         </div>
 
+        <!-- Red Side: Branding -->
         <div class="form-red-side">
             <div class="side-logo">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" height="50">
